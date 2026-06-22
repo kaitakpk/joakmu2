@@ -3,1239 +3,1284 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>โจ๊กหมู - ระบบสร้างภาพแนวทาง V2 (New Layout)</title>
-    <!-- โหลดฟอนต์ให้เหมือนต้นฉบับ -->
+    <title>สร้างภาพเลขนำโชค - Minimal Edition</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800;900&family=Prompt:wght@400;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&family=Sarabun:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
       :root {
-        --bg-dark: #0f172a;
-        --bg-panel: #1e293b;
-        --primary: #f43f5e;
-        --primary-hover: #e11d48;
-        --text-main: #f8fafc;
-        --text-muted: #94a3b8;
-        --border: #334155;
+        --bg-dark: #0c0f14;
+        --bg-panel: #14181f;
+        --border: #262b34;
+        --text-main: #f3f4f6;
+        --text-muted: #8b919c;
+        --accent: #b3231f;
+        --accent-soft: #d6463f;
+
+        /* sheet tokens — editable via skin */
+        --sheet-bg: #fbf7ee;
+        --sheet-bg2: #f3ede0;
+        --ink: #1d1c1a;
+        --ink-soft: #6b6258;
+        --red: #9c2020;
+        --red-soft: #b9433c;
+        --gold: #b08a3e;
       }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
+
       body {
-        font-family: 'Prompt', sans-serif;
+        font-family: 'Kanit', sans-serif;
         background-color: var(--bg-dark);
         color: var(--text-main);
         min-height: 100vh;
-        overflow-x: hidden;
       }
 
-      /* === DASHBOARD LAYOUT === */
       .dashboard {
         display: flex;
         height: 100vh;
       }
+
       .sidebar {
-        width: 400px;
+        width: 420px;
         background-color: var(--bg-panel);
-        padding: 30px;
+        padding: 22px;
         border-right: 1px solid var(--border);
         overflow-y: auto;
         display: flex;
         flex-direction: column;
-        gap: 24px;
-        z-index: 10;
+        gap: 16px;
       }
+
       .main-view {
         flex: 1;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 40px;
-        background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+        padding: 30px;
+        background:
+          radial-gradient(
+            circle at 30% 20%,
+            rgba(179, 35, 31, 0.1),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(176, 138, 62, 0.08),
+            transparent 45%
+          ),
+          #0a0c10;
         overflow-y: auto;
         position: relative;
       }
 
-      /* === SIDEBAR CONTROLS === */
-      .app-brand {
+      .brand {
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-size: 2rem;
-        font-weight: 900;
-        color: white;
+        gap: 10px;
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: #fff;
       }
-      .app-brand svg {
-        height: 1em;
-        fill: var(--primary);
+      .brand .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 12px var(--accent);
       }
-      .app-desc {
+      .subtitle {
         color: var(--text-muted);
-        font-size: 0.95rem;
+        font-size: 0.78rem;
         margin-top: -10px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border);
       }
 
-      .control-group {
+      .section-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #c9554f;
+        margin-bottom: 2px;
+      }
+
+      .group {
         display: flex;
         flex-direction: column;
+        gap: 6px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .field label {
+        font-size: 0.76rem;
+        color: var(--text-muted);
+      }
+
+      .input,
+      select.input {
+        background: #0b0d11;
+        color: #fff;
+        border: 1px solid var(--border);
+        padding: 9px 11px;
+        border-radius: 8px;
+        font-family: 'Kanit', sans-serif;
+        font-size: 0.88rem;
+        outline: none;
+        width: 100%;
+        transition: border-color 0.15s;
+      }
+      .input:focus,
+      .input:hover {
+        border-color: var(--accent-soft);
+      }
+
+      .row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 8px;
       }
-      .control-group label {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text-muted);
+      .row4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
       }
-      .form-control {
-        background: #0f172a;
-        color: white;
-        border: 2px solid var(--border);
-        padding: 14px 16px;
-        border-radius: 12px;
-        font-family: 'Prompt', sans-serif;
-        font-size: 1.1rem;
-        outline: none;
-        transition: all 0.2s;
-        cursor: pointer;
-      }
-      .form-control:focus,
-      .form-control:hover {
-        border-color: var(--primary);
+      .row5 {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
       }
 
-      .btn-generate {
-        background: linear-gradient(135deg, var(--primary), #be123c);
-        color: white;
-        border: none;
-        padding: 18px;
-        border-radius: 14px;
-        font-family: 'Prompt', sans-serif;
-        font-size: 1.25rem;
-        font-weight: 800;
+      .card {
+        background: #0b0d11;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .mini-input {
+        text-align: center;
+        font-weight: 700;
+        padding: 7px 4px;
+      }
+      .mini-label {
+        font-size: 0.65rem;
+        color: var(--text-muted);
+        text-align: center;
+        margin-bottom: 2px;
+      }
+
+      .btn-random {
+        background: #1a2230;
+        color: #5db4f0;
+        border: 1px solid #243044;
+        padding: 8px;
+        border-radius: 7px;
+        font-family: 'Kanit', sans-serif;
+        font-weight: 700;
+        font-size: 0.82rem;
         cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 10px 25px rgba(244, 63, 94, 0.3);
-        margin-top: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 6px;
+        transition: all 0.15s;
       }
-      .btn-generate:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 30px rgba(244, 63, 94, 0.5);
-      }
-      .btn-generate:active {
-        transform: translateY(1px);
+      .btn-random:hover {
+        background: #20304a;
       }
 
-      /* === PREVIEW AREA === */
+      .btn-main {
+        background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+        color: white;
+        border: none;
+        padding: 13px;
+        border-radius: 9px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 6px 16px rgba(179, 35, 31, 0.28);
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+      }
+      .btn-main:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(179, 35, 31, 0.4);
+      }
+
       .preview-wrapper {
-        width: 100%;
-        max-width: 480px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
-      }
-      .preview-container {
+        gap: 18px;
         width: 100%;
-        /* ปรับสัดส่วนให้เป็น 1:1 จตุรัส */
-        aspect-ratio: 1 / 1;
-        background: rgba(0, 0, 0, 0.3);
-        border: 2px dashed rgba(255, 255, 255, 0.1);
-        border-radius: 24px;
+        max-width: 540px;
+      }
+      .preview-box {
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 18px;
+        border: 1.5px dashed #2a2f38;
+        background: rgba(255, 255, 255, 0.02);
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
         position: relative;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
       }
-      .preview-image {
+      .preview-img {
         width: 100%;
         height: 100%;
         object-fit: contain;
         display: none;
       }
-      .empty-placeholder {
+      .placeholder {
         text-align: center;
         color: var(--text-muted);
-        padding: 20px;
+        padding: 24px;
       }
-      .empty-placeholder span {
-        font-size: 4rem;
+      .placeholder .ic {
+        font-size: 3rem;
         display: block;
         margin-bottom: 10px;
       }
 
-      /* === ACTION BUTTONS === */
-      .action-bar {
+      .actions {
         display: none;
-        flex-wrap: wrap;
-        gap: 12px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
         width: 100%;
-        justify-content: center;
       }
-      .btn-action {
+      .act-btn {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        color: white;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-family: 'Prompt', sans-serif;
-        font-size: 1rem;
+        color: #fff;
+        padding: 12px 6px;
+        border-radius: 9px;
         font-weight: 700;
+        font-size: 0.86rem;
         cursor: pointer;
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        transition: all 0.15s;
       }
-      .btn-action:hover {
-        background: #334155;
-        border-color: #475569;
+      .act-btn:hover {
         transform: translateY(-2px);
+        background: #1c212a;
       }
-      .btn-action.save {
-        color: #38bdf8;
-        border-color: #0284c7;
+      .act-btn.blue {
+        color: #5db4f0;
+        border-color: #1d4a6e;
       }
-      .btn-action.share {
-        color: #34d399;
-        border-color: #059669;
+      .act-btn.green {
+        color: #4fd394;
+        border-color: #1f5c45;
       }
-      .btn-action.copy {
-        color: #fbbf24;
-        border-color: #d97706;
+      .act-btn.gold {
+        color: #e0b154;
+        border-color: #5c4a1f;
       }
 
-      /* === LOADING SPINNER === */
-      .loader-overlay {
+      .loader {
         position: absolute;
         inset: 0;
-        background: rgba(15, 23, 42, 0.8);
-        backdrop-filter: blur(5px);
-        display: flex;
+        background: rgba(10, 12, 16, 0.92);
+        display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        z-index: 20;
-        border-radius: 24px;
-        display: none;
+        gap: 12px;
+        z-index: 30;
       }
-      .spinner {
-        width: 50px;
-        height: 50px;
-        border: 5px solid rgba(255, 255, 255, 0.1);
-        border-top-color: var(--primary);
+      .spin {
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin-bottom: 15px;
+        border: 4px solid rgba(255, 255, 255, 0.12);
+        border-top-color: var(--accent-soft);
+        animation: sp 0.8s linear infinite;
       }
-      @keyframes spin {
+      @keyframes sp {
         to {
           transform: rotate(360deg);
         }
       }
 
-      /* =========================================================
-         NEW HIDDEN RENDER TEMPLATE (MODERN PREMIUM LAYOUT)
-         ========================================================= */
-      .render-container {
+      /* ===================== RENDER SHEET ===================== */
+      .render-zone {
         position: fixed;
         top: 0;
         left: -9999px;
         width: 1080px;
-        height: 1080px; /* ปรับเป็น 1080x1080 */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #ffffff;
-        font-family: 'Kanit', sans-serif;
-      }
-      .canvas-board {
-        width: 1080px;
-        height: 1080px; /* ปรับเป็น 1080x1080 */
-        background: #f1f5f9;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
+        height: 1080px;
       }
 
-      /* โซนหัว (Header) */
-      .cb-header {
-        height: 280px; /* ลดความสูงลงให้พอดีกรอบ 1:1 */
-        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-        border-bottom-left-radius: 60px;
-        border-bottom-right-radius: 60px;
+      .sheet {
+        width: 1080px;
+        height: 1080px;
+        background: linear-gradient(
+          165deg,
+          var(--sheet-bg) 0%,
+          var(--sheet-bg2) 100%
+        );
         position: relative;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding-top: 10px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-        z-index: 5;
+        padding: 60px 64px 50px;
+        overflow: hidden;
+        font-family: 'Sarabun', sans-serif;
       }
-      /* ลวดลาย Background อ่อนๆ ใน Header */
-      .cb-header::after {
+
+      .sheet::before {
         content: '';
         position: absolute;
         inset: 0;
-        background-image: radial-gradient(
-          rgba(255, 255, 255, 0.1) 2px,
-          transparent 2px
+        background: radial-gradient(
+          circle at 50% 0%,
+          rgba(0, 0, 0, 0.04),
+          transparent 55%
         );
-        background-size: 30px 30px;
-        border-bottom-left-radius: 60px;
-        border-bottom-right-radius: 60px;
-        z-index: 1;
+        pointer-events: none;
       }
-      .cb-title {
-        font-size: 90px; /* ปรับลดขนาดลงนิดหน่อย */
-        font-weight: 900;
-        color: #fde047; /* สีเหลืองทองสว่าง */
-        text-align: center;
-        text-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        margin-bottom: 20px;
-        z-index: 4;
-        position: relative;
-        letter-spacing: 2px;
+
+      .frame-line {
+        position: absolute;
+        inset: 26px;
+        border: 1.5px solid rgba(156, 32, 32, 0.22);
+        border-radius: 2px;
+        pointer-events: none;
       }
-      .cb-date-pill {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        color: #ffffff;
-        padding: 10px 40px;
-        border-radius: 50px;
-        font-size: 32px; /* เล็กลงนิดนึง */
-        font-weight: 600;
+
+      /* credit block top-left */
+      .credit-block {
+        position: absolute;
+        top: 40px;
+        left: 40px;
         display: flex;
         align-items: center;
-        gap: 15px;
-        z-index: 3;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        gap: 16px;
+        z-index: 6;
       }
-      .date-icon {
-        width: 35px;
-        height: 35px;
-        color: #fde047;
-      }
-      /* ธงชาติแบบลอย 3D */
-      .cb-flag-real {
-        position: absolute;
-        top: 30px;
-        left: 30px;
-        width: 130px;
-        height: 85px;
-        border-radius: 12px;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        object-fit: cover;
-        z-index: 4;
-        border: 4px solid rgba(255, 255, 255, 0.8);
-      }
-      /* ธงชาติขนาดยักษ์จางๆ มุมขวา */
-      .cb-flag-bg {
-        position: absolute;
-        top: -30px;
-        right: -30px;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        object-fit: cover;
-        opacity: 0.15;
-        z-index: 2;
-        filter: grayscale(20%);
-        mask-image: radial-gradient(white, black);
-        -webkit-mask-image: -webkit-radial-gradient(white, black);
-      }
-
-      /* โซนเนื้อหา (Body) */
-      .cb-body {
-        flex: 1;
-        padding: 25px 40px; /* ลดช่องว่างบนล่างลง */
-        display: grid;
-        grid-template-columns: 460px 1fr;
-        grid-template-rows: auto auto;
-        gap: 20px 30px; /* ลดระยะห่างแนวตั้งระหว่างกล่อง */
-        z-index: 2;
-        margin-top: -30px; /* ดึงการ์ดขึ้นไปทับ Header ให้มีมิติ */
-      }
-
-      /* สไตล์กล่องร่วม (Modern Card UI) */
-      .box {
-        background: #ffffff;
-        border-radius: 40px; /* มุมมนใหญ่ขึ้น */
-        position: relative;
+      .credit-qr {
+        width: 110px;
+        height: 110px;
+        border-radius: 10px;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
         display: flex;
-        flex-direction: column;
-        box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08); /* เงานุ่ม */
-        border: 2px solid #ffffff; /* ให้แสงสะท้อนขอบ */
-      }
-
-      /* ป้ายหัวข้อแบบ Modern Badge */
-      .brush-header {
-        background: #f0f9ff;
-        color: #0369a1;
-        font-size: 28px; /* เล็กลงเพื่อให้พอดีกรอบ 1080 */
-        font-weight: 800;
-        padding: 8px 40px;
-        border-radius: 50px;
-        display: inline-block;
-        margin: 0 auto;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        border: 2px solid #bae6fd;
-      }
-      .brush-header.red {
-        background: #fff1f2;
-        color: #e11d48;
-        border: 2px solid #fecdd3;
-      }
-
-      /* --- กล่อง 1: เด่น (ซ้ายบน) --- */
-      .box-den {
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        border-radius: 40px;
+        align-items: center;
+        justify-content: center;
         overflow: hidden;
-        position: relative;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      }
+      .credit-qr img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .credit-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .credit-name {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--ink);
+        letter-spacing: 0.3px;
+      }
+      .credit-sub {
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--ink-soft);
+      }
+
+      /* flag top-right */
+      .flag-wrap {
+        position: absolute;
+        top: 38px;
+        right: 46px;
+        width: 160px;
+        height: 106px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        border: 3px solid #fff;
+        z-index: 6;
+      }
+      .flag-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* HEADER: title pill + date */
+      .header-area {
+        margin-top: 70px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        padding-bottom: 15px;
-        box-shadow: 0 25px 50px rgba(15, 23, 42, 0.2);
-        border: 2px solid #334155;
+        gap: 10px;
+        z-index: 3;
       }
-      .den-tag {
-        background: linear-gradient(135deg, #f43f5e, #be123c);
-        color: white;
-        font-size: 38px;
-        font-weight: 800;
-        padding: 8px 60px;
-        border-radius: 0 0 35px 35px;
-        margin-top: 0;
-        margin-bottom: 15px;
-        z-index: 2;
-        box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
-      }
-      .den-numbers {
-        display: flex;
-        align-items: baseline;
-        justify-content: center;
-        z-index: 2;
-        line-height: 0.9;
-        gap: 15px;
-      }
-      .den-num-1 {
-        font-size: 210px;
-        font-weight: 900;
-        color: #ffffff;
-        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      }
-      .den-num-2 {
-        font-size: 210px;
-        font-weight: 900;
-        color: #f43f5e;
-        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      }
-
-      /* --- กล่อง 2: สองตัว (ขวาบน) --- */
-      .box-2d {
-        grid-column: 2 / 3;
-        grid-row: 1 / 2;
-      }
-      .grid-2d {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 15px 10px;
-        padding: 0 30px;
-        text-align: center;
-      }
-      .num-item {
-        font-size: 55px; /* ปรับขนาดให้พอดีขึ้น */
-        font-weight: 800;
-        color: #0f172a;
-      }
-      .divider-dashed {
-        height: 3px;
-        background-image: linear-gradient(
-          to right,
-          #cbd5e1 50%,
-          transparent 50%
-        );
-        background-size: 25px 100%;
-        margin: 20px 40px;
-        opacity: 0.6;
-      }
-      .double-row {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 25px;
-        margin-bottom: 25px;
-      }
-      .num-double {
-        font-size: 55px;
-        font-weight: 800;
-        color: #e11d48;
-      }
-
-      /* --- กล่อง 3: วิ่ง/รูด (ซ้ายล่าง) --- */
-      .box-run {
-        grid-column: 1 / 2;
-        grid-row: 2 / 3;
-        justify-content: center;
-        align-items: center;
-      }
-      .run-text {
-        font-size: 95px;
-        font-weight: 900;
-        color: #0f172a;
-        margin-top: 5px;
-        margin-bottom: 20px;
-      }
-
-      /* --- กล่อง 4: สามตัวตรง (ขวาล่าง) --- */
-      .box-3d {
-        grid-column: 2 / 3;
-        grid-row: 2 / 3;
-      }
-      .grid-3d {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px 5px;
-        padding: 0 15px 25px;
-        text-align: center;
-      }
-      .num-3item {
-        font-size: 44px;
-        font-weight: 800;
-        color: #0f172a;
+      .title-pill {
         position: relative;
+        padding: 14px 56px;
+        font-size: 78px;
+        font-weight: 800;
+        color: var(--red);
+        text-align: center;
+        letter-spacing: 1px;
       }
-      /* จุดสีแดงคั่น */
-      .num-3item:not(:nth-child(4n))::after {
+      .title-pill::before,
+      .title-pill::after {
         content: '';
         position: absolute;
-        right: -8px;
         top: 50%;
+        width: 130px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--gold));
+      }
+      .title-pill::before {
+        left: -120px;
         transform: translateY(-50%);
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #f43f5e;
+        background: linear-gradient(90deg, transparent, var(--gold));
+      }
+      .title-pill::after {
+        right: -120px;
+        transform: translateY(-50%) scaleX(-1);
       }
 
-      /* โซน Footer (แบรนด์ดิ้ง) แบบแคปซูลลอย */
-      .cb-footer {
-        height: 80px; /* ลดความสูงลง */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px; /* ลดระยะห่างด้านล่าง */
-        z-index: 5;
-      }
-      .cb-brand-pill {
-        background: #ffffff;
-        padding: 10px 45px;
-        border-radius: 50px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        border: 2px solid #f1f5f9;
-      }
-      .cb-brand {
+      .date-pill {
+        background: var(--ink);
+        color: var(--sheet-bg);
         font-size: 32px;
-        font-weight: 800;
-        color: #0f172a;
-      }
-      .cb-brand svg {
-        height: 35px;
-        fill: #e11d48;
+        font-weight: 700;
+        padding: 9px 30px;
+        border-radius: 30px;
+        letter-spacing: 2px;
       }
 
-      @media (max-width: 800px) {
-        .dashboard {
-          flex-direction: column;
-          height: auto;
-        }
-        .sidebar {
-          width: 100%;
-          border-right: none;
-          border-bottom: 1px solid var(--border);
-          padding: 20px;
-        }
-        .main-view {
-          min-height: 600px;
-          padding: 20px;
-        }
+      /* MIDDLE: den + run */
+      .mid-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        padding: 0 10px;
+        z-index: 3;
+      }
+      .den-block,
+      .run-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+      .block-tag {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--ink-soft);
+        letter-spacing: 1px;
+      }
+      .den-value {
+        font-size: 190px;
+        font-weight: 800;
+        color: var(--red);
+        line-height: 0.85;
+        letter-spacing: -2px;
+      }
+      .run-value {
+        font-size: 98px;
+        font-weight: 800;
+        color: var(--ink);
+        letter-spacing: 2px;
+      }
+
+      .divider {
+        height: 2px;
+        margin: 16px 0 16px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--gold) 0,
+          var(--gold) 14px,
+          transparent 14px,
+          transparent 26px
+        );
+        opacity: 0.55;
+        z-index: 3;
+      }
+
+      /* TWO-DIGIT LINES */
+      .two-lines {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+        z-index: 3;
+      }
+      .two-line {
+        font-size: 72px;
+        font-weight: 800;
+        color: var(--red-soft);
+        letter-spacing: 2px;
+        text-align: center;
+      }
+
+      /* THREE-DIGIT LINE */
+      .three-line {
+        margin-top: 14px;
+        font-size: 64px;
+        font-weight: 800;
+        color: var(--red);
+        text-align: center;
+        letter-spacing: 1px;
+        z-index: 3;
+      }
+
+      .bottom-area {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        z-index: 3;
+      }
+      .key-number {
+        font-size: 40px;
+        font-weight: 700;
+        color: var(--ink);
+        letter-spacing: 4px;
+      }
+      .win-word {
+        font-size: 38px;
+        font-weight: 800;
+        color: var(--gold);
+        letter-spacing: 6px;
+      }
+
+      .stars-row {
+        position: absolute;
+        bottom: 46px;
+        right: 56px;
+        font-size: 20px;
+        color: var(--gold);
+        letter-spacing: 3px;
+        z-index: 4;
       }
     </style>
   </head>
   <body>
-    <!-- DASHBOARD UI -->
     <div class="dashboard">
       <!-- SIDEBAR -->
       <div class="sidebar">
-        <div class="app-brand">
-          <svg viewBox="0 0 1200 1227">
-            <path
-              d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.163 519.284ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.828Z"
-            />
-          </svg>
-          โจ๊กหมู
+        <div class="brand">
+          <span class="dot"></span>เลขนำโชค · Minimal Edition
         </div>
-        <div class="app-desc">Image Generator V2 - Layout ใหม่!</div>
+        <div class="subtitle">
+          สร้างภาพชุดเลขสไตล์เรียบ สะอาด ใส่เครดิตของคุณเองได้
+        </div>
 
-        <div class="control-group">
-          <label>ประเภทหวย</label>
-          <select id="lotteryType" class="form-control">
+        <div class="group">
+          <div class="section-label">เครดิตของคุณ</div>
+          <div class="card">
+            <div class="field">
+              <label>ชื่อเพจ / ชื่อร้าน</label>
+              <input
+                class="input"
+                id="creditName"
+                value="huay321"
+                oninput="syncAll()"
+              />
+            </div>
+            <div class="field">
+              <label>ข้อความรอง (ถ้ามี เช่น ID ไลน์ / เว็บไซต์)</label>
+              <input
+                class="input"
+                id="creditSub"
+                value=""
+                placeholder="เช่น Line: @huay321"
+                oninput="syncAll()"
+              />
+            </div>
+            <div class="field">
+              <label>รูป QR Code (วาง URL รูปภาพ หรือเว้นว่างไว้)</label>
+              <input
+                class="input"
+                id="creditQr"
+                value=""
+                placeholder="https://..."
+                oninput="syncAll()"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="section-label">สกินกระดาษ</div>
+          <select class="input" id="paperSkin" onchange="updateSkin()">
+            <option value="cream">ครีมนวล (Soft Cream)</option>
+            <option value="ivory">งาช้างอุ่น (Warm Ivory)</option>
+            <option value="rose">ชมพูอ่อนมงคล (Rose Blush)</option>
+            <option value="slate">เทาฟ้าหมอก (Cool Slate)</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <div class="section-label">ประเภทหวย / แนวทาง</div>
+          <select
+            class="input"
+            id="lotteryType"
+            onchange="updateLotteryTitle()"
+          >
             <optgroup label="🇹🇭 หวยไทย">
               <option value="thai_gov">หวยรัฐบาลไทย</option>
             </optgroup>
             <optgroup label="🇱🇦 หวยลาว">
-              <option value="lao_normal">ลาว ปกติ</option>
-              <option value="lao_dev" selected>ลาว พัฒนา</option>
+              <option value="lao_normal">ลาวปกติ</option>
+              <option value="lao_dev" selected>ลาวพัฒนา</option>
               <option value="lao_extra">ลาว Extra</option>
-              <option value="lao_tv">ลาว TV</option>
               <option value="lao_hd">ลาว HD</option>
               <option value="lao_star">ลาว Star</option>
-              <option value="lao_samakkhi">ลาว สามัคคี</option>
-              <option value="lao_asean">ลาว อาเซียน</option>
+              <option value="lao_samakkhi">ลาวสามัคคี</option>
               <option value="lao_vip">ลาว VIP</option>
-              <option value="lao_samakkhi_vip">ลาว สามัคคี VIP</option>
-              <option value="lao_star_vip">ลาว Star VIP</option>
-              <option value="lao_redcross">ลาว กาชาด</option>
+              <option value="lao_redcross">ลาวกาชาด</option>
             </optgroup>
             <optgroup label="🇻🇳 หวยฮานอย">
-              <option value="hanoi_normal">ฮานอย ปกติ</option>
-              <option value="hanoi_special">ฮานอย พิเศษ</option>
+              <option value="hanoi_normal">ฮานอยปกติ</option>
+              <option value="hanoi_special">ฮานอยพิเศษ</option>
               <option value="hanoi_vip">ฮานอย VIP</option>
               <option value="hanoi_extra">ฮานอย EXTRA</option>
-              <option value="hanoi_star">ฮานอย Star</option>
-              <option value="hanoi_asean">ฮานอย อาเซียน</option>
-              <option value="hanoi_hd">ฮานอย HD</option>
-              <option value="hanoi_tv">ฮานอย TV</option>
-              <option value="hanoi_redcross">ฮานอย กาชาด</option>
-              <option value="hanoi_samakkhi">ฮานอย สามัคคี</option>
-              <option value="hanoi_dev">ฮานอย พัฒนา</option>
-              <option value="hanoi_late">ฮานอย รอบดึก</option>
             </optgroup>
             <optgroup label="🇲🇾 หวยมาเลย์">
-              <option value="malay_normal">มาเลย์ ปกติ</option>
+              <option value="malay_normal">มาเลย์ปกติ</option>
               <option value="malay_vip">มาเลย์ VIP</option>
-              <option value="malay_star">มาเลย์ Star</option>
             </optgroup>
-            <optgroup label="📈 หวยหุ้นต่างประเทศ">
-              <option value="stock_thai">ไทย (ปกติ)</option>
-              <option value="stock_thai_evening">ไทยเย็น</option>
-              <option value="stock_ch9">หุ้นช่อง 9</option>
-              <option value="stock_nikkei_m">นิเคอิ (เช้า)</option>
-              <option value="stock_nikkei_a">นิเคอิ (บ่าย)</option>
-              <option value="stock_china_m">จีน (เช้า)</option>
-              <option value="stock_china_a">จีน (บ่าย)</option>
-              <option value="stock_hsi_m">ฮั่งเส็ง (เช้า)</option>
-              <option value="stock_hsi_a">ฮั่งเส็ง (บ่าย)</option>
-              <option value="stock_taiwan">ไต้หวัน</option>
-              <option value="stock_korea">เกาหลี</option>
-              <option value="stock_sg">สิงคโปร์</option>
-              <option value="stock_india">อินเดีย</option>
-              <option value="stock_egypt">อียิปต์</option>
-              <option value="stock_russia">รัสเซีย</option>
-              <option value="stock_ftse">อังกฤษ</option>
-              <option value="stock_dax">เยอรมัน</option>
-              <option value="stock_dow">ดาวโจนส์ ปกติ</option>
-              <option value="stock_euro">ยูโร</option>
-            </optgroup>
-            <optgroup label="🎯 ยี่กี">
-              <option value="yeekee_normal">ยี่กี ธรรมดา</option>
-              <option value="yeekee_vip">ยี่กี VIP</option>
-              <option value="yeekee_star">ยี่กี Star</option>
+            <optgroup label="📈 หุ้นต่างประเทศ">
+              <option value="stock_nikkei">นิเคอิ</option>
+              <option value="stock_hsi">ฮั่งเส็ง</option>
+              <option value="stock_dow">ดาวโจนส์</option>
+              <option value="stock_china">หุ้นจีน</option>
             </optgroup>
           </select>
         </div>
 
-        <div class="control-group">
-          <label>วันที่งวด (ระบุเพื่อสร้างในภาพ)</label>
-          <input type="date" id="dateInput" class="form-control" />
+        <div class="group">
+          <div class="section-label">วันที่งวด</div>
+          <input
+            type="date"
+            id="dateInput"
+            class="input"
+            onchange="syncAll()"
+          />
         </div>
 
-        <button class="btn-generate" onclick="generateImage()">
-          🎲 สุ่มเลข & สร้างรูป
+        <div class="group">
+          <div class="section-label">ระดับความมั่นใจ</div>
+          <select class="input" id="starsRating" onchange="syncAll()">
+            <option value="★★★★★">5 ดาว เฮงมาก</option>
+            <option value="★★★★">4 ดาว ดีมาก</option>
+            <option value="★★★">3 ดาว ปานกลาง</option>
+            <option value="">ไม่แสดงดาว</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div class="section-label" style="margin: 0">ชุดตัวเลข</div>
+            <button class="btn-random" onclick="randomizeAll()">
+              🎲 สุ่มชุดใหม่
+            </button>
+          </div>
+          <div class="card">
+            <div>
+              <div class="mini-label">เด่น / วิ่ง</div>
+              <div class="row2">
+                <input
+                  class="input mini-input"
+                  id="numDen"
+                  maxlength="2"
+                  value="73"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="numRun"
+                  maxlength="11"
+                  value="77-33"
+                  oninput="syncAll()"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="mini-label">สองตัว บรรทัด 1 (5 ชุด)</div>
+              <div class="row5">
+                <input
+                  class="input mini-input"
+                  id="line1_1"
+                  maxlength="2"
+                  value="70"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="line1_2"
+                  maxlength="2"
+                  value="74"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="line1_3"
+                  maxlength="2"
+                  value="75"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="line1_4"
+                  maxlength="2"
+                  value="79"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="line1_5"
+                  maxlength="2"
+                  value="30"
+                  oninput="syncAll()"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="mini-label">สองตัว บรรทัด 2 (5 ชุด)</div>
+              <div class="row5">
+                <input
+                  class="input mini-input"
+                  id="line2_1"
+                  maxlength="2"
+                  value="34"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="line2_2"
+                  maxlength="2"
+                  value="35"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="line2_3"
+                  maxlength="2"
+                  value="39"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="line2_4"
+                  maxlength="2"
+                  value="04"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="line2_5"
+                  maxlength="2"
+                  value="05"
+                  oninput="syncAll()"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="mini-label">สามตัว (4 ชุด)</div>
+              <div class="row4">
+                <input
+                  class="input mini-input"
+                  id="three1"
+                  maxlength="3"
+                  value="730"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="three2"
+                  maxlength="3"
+                  value="734"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="three3"
+                  maxlength="3"
+                  value="735"
+                  oninput="syncAll()"
+                />
+                <input
+                  class="input mini-input"
+                  id="three4"
+                  maxlength="3"
+                  value="739"
+                  oninput="syncAll()"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="mini-label">เลขสำคัญ (key number)</div>
+              <input
+                class="input mini-input"
+                id="keyNumber"
+                maxlength="8"
+                value="730459"
+                oninput="syncAll()"
+              />
+            </div>
+            <div>
+              <div class="mini-label">คำลงท้าย</div>
+              <input
+                class="input mini-input"
+                id="winWord"
+                maxlength="10"
+                value="วิน"
+                oninput="syncAll()"
+              />
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-main" onclick="generateImage()">
+          ✨ สลักภาพเลขนำโชค
         </button>
       </div>
 
-      <!-- MAIN VIEW (PREVIEW) -->
+      <!-- MAIN VIEW -->
       <div class="main-view">
         <div class="preview-wrapper">
-          <div class="preview-container" id="previewContainer">
-            <!-- Loading -->
-            <div id="loader" class="loader-overlay">
-              <div class="spinner"></div>
-              <p style="font-weight: 600; letter-spacing: 1px">
-                กำลังประมวลผลภาพ Layout ใหม่...
+          <div class="preview-box">
+            <div class="loader" id="loader">
+              <div class="spin"></div>
+              <p style="font-weight: 600; font-size: 0.95rem">
+                กำลังสร้างภาพ...
               </p>
             </div>
-
-            <div id="placeholder" class="empty-placeholder">
-              <span>🐷</span>
-              <p>กดปุ่มสุ่มเลขเพื่อดูรูปภาพ</p>
+            <div class="placeholder" id="placeholder">
+              <span class="ic">🎯</span>
+              <p style="font-weight: 700">ภาพเลขนำโชคสไตล์มินิมอล</p>
+              <p style="font-size: 0.82rem; margin-top: 6px; color: #6b7280">
+                ตั้งค่าเลขและเครดิตของคุณ แล้วกดสลักภาพ
+              </p>
             </div>
-
-            <img id="previewImg" class="preview-image" alt="Lottery Preview" />
+            <img id="previewImg" class="preview-img" alt="preview" />
           </div>
-
-          <!-- ACTION BAR -->
-          <div class="action-bar" id="actionBar">
-            <button class="btn-action save" onclick="saveImage()">
-              💾 บันทึกรูปภาพ
+          <div class="actions" id="actions">
+            <button class="act-btn blue" onclick="saveImage()">
+              💾 บันทึก
             </button>
-            <button
-              class="btn-action share"
-              id="shareBtn"
-              onclick="shareImage()"
-            >
+            <button class="act-btn green" id="shareBtn" onclick="shareImage()">
               📤 แชร์
             </button>
-            <button class="btn-action copy" onclick="copyCaption()">
-              📋 คัดลอกแคปชั่น
+            <button class="act-btn gold" onclick="copyCaption()">
+              📋 แคปชั่น
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ==========================================
-         HIDDEN RENDER TEMPLATE (NEW LAYOUT)
-         ========================================== -->
-    <div id="renderZone" class="render-container">
-      <div class="canvas-board" id="canvasBoard">
-        <!-- HEADER -->
-        <div class="cb-header" id="cbHeader">
-          <img
-            id="rFlagBg"
-            class="cb-flag-bg"
-            src=""
-            alt="flag-bg"
-            crossorigin="anonymous"
-          />
-          <img
-            id="rFlag"
-            class="cb-flag-real"
-            src=""
-            alt="flag"
-            crossorigin="anonymous"
-          />
-          <div class="cb-title" id="rTitle">หวยลาว</div>
-          <div class="cb-date-pill">
-            <svg
-              class="date-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="16" y1="2" x2="16" y2="6"></line>
-              <line x1="8" y1="2" x2="8" y2="6"></line>
-              <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
-            <span id="rDateFull">วันที่ 4 มิถุนายน 2569</span>
-            <svg
-              class="date-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-              ></polygon>
-            </svg>
+    <!-- ===================== RENDER ZONE ===================== -->
+    <div class="render-zone">
+      <div class="sheet" id="sheet">
+        <div class="frame-line"></div>
+
+        <div class="credit-block">
+          <div class="credit-qr" id="creditQrBox">
+            <img id="creditQrImg" src="" alt="qr" style="display: none" />
+          </div>
+          <div class="credit-text">
+            <div class="credit-name" id="rCreditName">huay321</div>
+            <div class="credit-sub" id="rCreditSub" style="display: none"></div>
           </div>
         </div>
 
-        <!-- BODY GRID -->
-        <div class="cb-body">
-          <!-- Box 1: เด่น -->
-          <div class="box-den">
-            <div class="den-tag">เด่น</div>
-            <div class="den-numbers">
-              <span class="den-num-1" id="rDen1">3</span>
-              <span class="den-num-2" id="rDen2">7</span>
-            </div>
-          </div>
+        <div class="flag-wrap">
+          <img id="rFlag" src="" alt="flag" crossorigin="anonymous" />
+        </div>
 
-          <!-- Box 2: สองตัว + เบิ้ล -->
-          <div class="box box-2d">
-            <div class="brush-header">สองตัว</div>
-            <div class="grid-2d" id="rGrid2D">
-              <!-- JS จะสร้าง 8 ตัวเลขที่นี่ -->
-            </div>
-            <div class="divider-dashed"></div>
-            <div class="double-row">
-              <div class="brush-header red" style="margin: 0; font-size: 28px">
-                เบิ้ล - หาม
-              </div>
-              <div class="num-double" id="rDouble1">33</div>
-              <div class="num-double" id="rDouble2">77</div>
-            </div>
-          </div>
+        <div class="stars-row" id="rStars">★★★★★</div>
 
-          <!-- Box 3: วิ่ง/รูด -->
-          <div class="box box-run">
-            <div class="brush-header red">วิ่ง / รูด</div>
-            <div class="run-text" id="rRun">3 - 7</div>
-          </div>
+        <div class="header-area">
+          <div class="title-pill" id="rTitle">ลาวพัฒนา</div>
+          <div class="date-pill" id="rDate">22/06/69</div>
+        </div>
 
-          <!-- Box 4: สามตัวตรง -->
-          <div class="box box-3d">
-            <div class="brush-header">สามตัวตรง</div>
-            <div class="grid-3d" id="rGrid3D">
-              <!-- JS จะสร้าง 8 ตัวเลขที่นี่ -->
-            </div>
+        <div class="mid-row">
+          <div class="den-block">
+            <div class="block-tag">เด่น</div>
+            <div class="den-value" id="rDen">73</div>
+          </div>
+          <div class="run-block">
+            <div class="block-tag">เบิ้ล / วิ่ง</div>
+            <div class="run-value" id="rRun">77-33</div>
           </div>
         </div>
 
-        <!-- FOOTER BRANDING -->
-        <div class="cb-footer">
-          <div class="cb-brand-pill">
-            <svg viewBox="0 0 1200 1227">
-              <path
-                d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.163 519.284ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.828Z"
-              />
-            </svg>
-            <div class="cb-brand">โจ๊กหมู @joakmuu</div>
-          </div>
+        <div class="divider"></div>
+
+        <div class="two-lines">
+          <div class="two-line" id="rLine1">70-74-75-79-30</div>
+          <div class="two-line" id="rLine2">34-35-39-04-05</div>
+        </div>
+
+        <div class="three-line" id="rThreeLine">730-734-735-739</div>
+
+        <div class="bottom-area">
+          <div class="key-number" id="rKeyNumber">730459</div>
+          <div class="win-word" id="rWinWord">วิน</div>
         </div>
       </div>
     </div>
 
-    <!-- ==========================================
-         JAVASCRIPT LOGIC
-         ========================================== -->
     <script>
-      const THAI_MONTHS = [
-        'มกราคม',
-        'กุมภาพันธ์',
-        'มีนาคม',
-        'เมษายน',
-        'พฤษภาคม',
-        'มิถุนายน',
-        'กรกฎาคม',
-        'สิงหาคม',
-        'กันยายน',
-        'ตุลาคม',
-        'พฤศจิกายน',
-        'ธันวาคม',
-      ]
-
       const LOTTERY_DATA = {
-        // 🇹🇭 หวยไทย
-        thai_gov: { name: 'รัฐบาลไทย', flag: 'th' },
-
-        // 🇱🇦 หวยลาว
-        lao_normal: { name: 'หวยลาว', flag: 'la' },
+        thai_gov: { name: 'หวยรัฐบาลไทย', flag: 'th' },
+        lao_normal: { name: 'ลาวปกติ', flag: 'la' },
         lao_dev: { name: 'ลาวพัฒนา', flag: 'la' },
         lao_extra: { name: 'ลาว Extra', flag: 'la' },
-        lao_tv: { name: 'ลาว TV', flag: 'la' },
         lao_hd: { name: 'ลาว HD', flag: 'la' },
         lao_star: { name: 'ลาว Star', flag: 'la' },
         lao_samakkhi: { name: 'ลาวสามัคคี', flag: 'la' },
-        lao_asean: { name: 'ลาวอาเซียน', flag: 'la' },
         lao_vip: { name: 'ลาว VIP', flag: 'la' },
-        lao_samakkhi_vip: { name: 'ลาวสามัคคี VIP', flag: 'la' },
-        lao_star_vip: { name: 'ลาว Star VIP', flag: 'la' },
         lao_redcross: { name: 'ลาวกาชาด', flag: 'la' },
-
-        // 🇻🇳 หวยฮานอย
         hanoi_normal: { name: 'ฮานอยปกติ', flag: 'vn' },
         hanoi_special: { name: 'ฮานอยพิเศษ', flag: 'vn' },
         hanoi_vip: { name: 'ฮานอย VIP', flag: 'vn' },
         hanoi_extra: { name: 'ฮานอย EXTRA', flag: 'vn' },
-        hanoi_star: { name: 'ฮานอย Star', flag: 'vn' },
-        hanoi_asean: { name: 'ฮานอยอาเซียน', flag: 'vn' },
-        hanoi_hd: { name: 'ฮานอย HD', flag: 'vn' },
-        hanoi_tv: { name: 'ฮานอย TV', flag: 'vn' },
-        hanoi_redcross: { name: 'ฮานอยกาชาด', flag: 'vn' },
-        hanoi_samakkhi: { name: 'ฮานอยสามัคคี', flag: 'vn' },
-        hanoi_dev: { name: 'ฮานอยพัฒนา', flag: 'vn' },
-        hanoi_late: { name: 'ฮานอยรอบดึก', flag: 'vn' },
-
-        // 🇲🇾 หวยมาเลย์
-        malay_normal: { name: 'หวยมาเลย์', flag: 'my' },
+        malay_normal: { name: 'มาเลย์ปกติ', flag: 'my' },
         malay_vip: { name: 'มาเลย์ VIP', flag: 'my' },
-        malay_star: { name: 'มาเลย์ Star', flag: 'my' },
-
-        // 📈 หวยหุ้น
-        stock_thai: { name: 'หุ้นไทย (ปกติ)', flag: 'th' },
-        stock_thai_evening: { name: 'หุ้นไทยเย็น', flag: 'th' },
-        stock_ch9: { name: 'หุ้นช่อง 9', flag: 'th' },
-        stock_nikkei_m: { name: 'นิเคอิ (เช้า)', flag: 'jp' },
-        stock_nikkei_a: { name: 'นิเคอิ (บ่าย)', flag: 'jp' },
-        stock_china_m: { name: 'หุ้นจีน (เช้า)', flag: 'cn' },
-        stock_china_a: { name: 'หุ้นจีน (บ่าย)', flag: 'cn' },
-        stock_hsi_m: { name: 'ฮั่งเส็ง (เช้า)', flag: 'hk' },
-        stock_hsi_a: { name: 'ฮั่งเส็ง (บ่าย)', flag: 'hk' },
-        stock_taiwan: { name: 'หุ้นไต้หวัน', flag: 'tw' },
-        stock_korea: { name: 'หุ้นเกาหลี', flag: 'kr' },
-        stock_sg: { name: 'หุ้นสิงคโปร์', flag: 'sg' },
-        stock_india: { name: 'หุ้นอินเดีย', flag: 'in' },
-        stock_egypt: { name: 'หุ้นอียิปต์', flag: 'eg' },
-        stock_russia: { name: 'หุ้นรัสเซีย', flag: 'ru' },
-        stock_ftse: { name: 'หุ้นอังกฤษ', flag: 'gb' },
-        stock_dax: { name: 'หุ้นเยอรมัน', flag: 'de' },
-        stock_dow: { name: 'ดาวโจนส์ ปกติ', flag: 'us' },
-        stock_euro: { name: 'หุ้นยูโร', flag: 'eu' },
-
-        // 🎯 ยี่กี
-        yeekee_normal: { name: 'ยี่กีธรรมดา', flag: 'th' },
-        yeekee_vip: { name: 'ยี่กี VIP', flag: 'th' },
-        yeekee_star: { name: 'ยี่กี Star', flag: 'th' },
+        stock_nikkei: { name: 'นิเคอิ', flag: 'jp' },
+        stock_hsi: { name: 'ฮั่งเส็ง', flag: 'hk' },
+        stock_dow: { name: 'ดาวโจนส์', flag: 'us' },
+        stock_china: { name: 'หุ้นจีน', flag: 'cn' },
       }
 
-      let currentData = null
-      let currentBase64Image = null
+      const SKINS = {
+        cream: {
+          bg: '#fbf7ee',
+          bg2: '#f3ede0',
+          ink: '#1d1c1a',
+          inkSoft: '#6b6258',
+          red: '#9c2020',
+          redSoft: '#b9433c',
+          gold: '#b08a3e',
+        },
+        ivory: {
+          bg: '#fdf9f0',
+          bg2: '#f6ecd8',
+          ink: '#23201a',
+          inkSoft: '#766c5a',
+          red: '#a3361f',
+          redSoft: '#c4583a',
+          gold: '#c79a4b',
+        },
+        rose: {
+          bg: '#fdf2f0',
+          bg2: '#f6e1de',
+          ink: '#2a1b1b',
+          inkSoft: '#8a6260',
+          red: '#a3243f',
+          redSoft: '#c14a5e',
+          gold: '#bb8a5a',
+        },
+        slate: {
+          bg: '#f3f5f7',
+          bg2: '#e6eaee',
+          ink: '#1d242b',
+          inkSoft: '#5e6b76',
+          red: '#7a2030',
+          redSoft: '#9c3d4a',
+          gold: '#7d8a96',
+        },
+      }
 
-      // Utility Functions
+      let currentImage = null
+
       function getFlagUrl(code) {
         return `https://flagcdn.com/w320/${code}.png`
       }
 
-      // แปลงวันที่เป็น "วันที่ X เดือน YYYY"
-      function getFullThaiDate(dateStr) {
-        const [y, m, d] = dateStr.split('-').map(Number)
-        const day = parseInt(d, 10)
-        const month = THAI_MONTHS[m - 1]
-        const year = y + 543
-        return `วันที่ ${day} ${month} ${year}`
+      function updateSkin() {
+        const skin = SKINS[document.getElementById('paperSkin').value]
+        const root = document.documentElement.style
+        root.setProperty('--sheet-bg', skin.bg)
+        root.setProperty('--sheet-bg2', skin.bg2)
+        root.setProperty('--ink', skin.ink)
+        root.setProperty('--ink-soft', skin.inkSoft)
+        root.setProperty('--red', skin.red)
+        root.setProperty('--red-soft', skin.redSoft)
+        root.setProperty('--gold', skin.gold)
       }
 
-      function getTodayStr() {
-        const d = new Date()
-        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+      function updateLotteryTitle() {
+        const data = LOTTERY_DATA[
+          document.getElementById('lotteryType').value
+        ] || { name: 'แนวทาง', flag: 'th' }
+        document.getElementById('rTitle').innerText = data.name
+        document.getElementById('rFlag').src = getFlagUrl(data.flag)
+      }
+
+      function formatThaiShortDate(dateVal) {
+        if (!dateVal) return ''
+        const d = new Date(dateVal)
+        const dd = String(d.getDate()).padStart(2, '0')
+        const mm = String(d.getMonth() + 1).padStart(2, '0')
+        const yy = String((d.getFullYear() + 543) % 100).padStart(2, '0')
+        return `${dd}/${mm}/${yy}`
       }
 
       function secureRandom(min, max) {
-        const array = new Uint32Array(1)
-        window.crypto.getRandomValues(array)
-        return Math.floor((array[0] / (0xffffffff + 1)) * (max - min + 1)) + min
+        const arr = new Uint32Array(1)
+        window.crypto.getRandomValues(arr)
+        return Math.floor((arr[0] / (0xffffffff + 1)) * (max - min + 1)) + min
       }
 
-      function secureRandom(min, max) {
-        const array = new Uint32Array(1)
-        window.crypto.getRandomValues(array)
-        return Math.floor((array[0] / (0xffffffff + 1)) * (max - min + 1)) + min
+      function pad2(n) {
+        return String(n).padStart(2, '0')
+      }
+      function pad3(n) {
+        return String(n).padStart(3, '0')
       }
 
-      // สร้าง Set ของเลขไม่ซ้ำ รับ forced เป็น array ที่ต้องการใส่ก่อน
-      function getUniqueNumbers(count, digits, forced = []) {
-        const set = new Set(forced.map(n => String(n).padStart(digits, '0')))
-        const max = Math.pow(10, digits) - 1
-        const limit = Math.min(count, max + 1)
-        let tries = 0
-        while (set.size < limit && tries++ < 9999) {
-          set.add(String(secureRandom(0, max)).padStart(digits, '0'))
+      function randomizeAll() {
+        const den = secureRandom(0, 99)
+        const denStr = pad2(den)
+        const d1 = denStr[0],
+          d2 = denStr[1]
+
+        const runA = pad2(secureRandom(0, 9) * 11)
+        const runB = pad2(secureRandom(0, 9) * 11)
+        document.getElementById('numRun').value = `${runA}-${runB}`
+
+        const usedTwo = new Set()
+        const pickTwo = () => {
+          let v
+          do {
+            v = pad2(secureRandom(0, 99))
+          } while (usedTwo.has(v))
+          usedTwo.add(v)
+          return v
         }
-        return [...set]
-      }
+        document.getElementById('numDen').value = denStr
+        for (let i = 1; i <= 5; i++)
+          document.getElementById(`line1_${i}`).value = pickTwo()
+        for (let i = 1; i <= 5; i++)
+          document.getElementById(`line2_${i}`).value = pickTwo()
 
-      // ── Logic หลัก ────────────────────────────────────────────────
-      function generateLogic() {
-        // 1. เลขเด่น 2 ตัว (1-9 ไม่ซ้ำ)
-        let den1 = secureRandom(1, 9)
-        let den2
-        do {
-          den2 = secureRandom(1, 9)
-        } while (den1 === den2)
-
-        // 2. เบิ้ลเด่น 2 ตัว (คงไว้เหมือนเดิม)
-        const db1 = `${den1}${den1}`
-        const db2 = `${den2}${den2}`
-
-        // 3. สองตัว 8 ชุด
-        //    forced = คู่เด่นทั้ง 4 แบบ + random fill ไม่ซ้ำ
-        const forced2 = [
-          `${den1}${den2}`, // เด่นนำ
-          `${den2}${den1}`, // เด่นกลับ
-          `${den1}${secureRandom(0, 9)}`, // เด่น1 + random
-          `${secureRandom(0, 9)}${den2}`, // random + เด่น2
-        ]
-        const twoDigits = getUniqueNumbers(8, 2, forced2)
-
-        // 4. สามตัว 8 ชุด
-        //    forced = เด่นทุกตำแหน่ง ไม่ซ้ำกันอีกต่อไป
-        const r = () => secureRandom(0, 9)
-        const forced3 = [
-          `${den1}${den2}${r()}`, // เด่นนำ + random ท้าย
-          `${r()}${den1}${den2}`, // random นำ + เด่นตาม
-          `${den2}${r()}${den1}`, // สลับเด่น
-          `${den1}${r()}${den2}`, // เด่นคั่น
-        ]
-        const threeDigits = getUniqueNumbers(8, 3, forced3)
-
-        return {
-          den1,
-          den2,
-          run: `${den1} - ${den2}`,
-          twoDigits,
-          doubles: [db1, db2],
-          threeDigits,
+        const usedThree = new Set()
+        const pickThree = () => {
+          let v
+          do {
+            v = pad3(secureRandom(0, 999))
+          } while (usedThree.has(v))
+          usedThree.add(v)
+          return v
         }
+        for (let i = 1; i <= 4; i++)
+          document.getElementById(`three${i}`).value = pickThree()
+
+        document.getElementById('keyNumber').value =
+          pad3(secureRandom(0, 999)) + pad3(secureRandom(0, 999)).slice(0, 3)
+
+        syncAll()
       }
 
-      function awaitImageLoad(imgElem) {
+      function syncAll() {
+        document.getElementById('rCreditName').innerText =
+          document.getElementById('creditName').value || ' '
+        const sub = document.getElementById('creditSub').value
+        const subEl = document.getElementById('rCreditSub')
+        if (sub) {
+          subEl.style.display = 'block'
+          subEl.innerText = sub
+        } else {
+          subEl.style.display = 'none'
+        }
+
+        const qrUrl = document.getElementById('creditQr').value
+        const qrImg = document.getElementById('creditQrImg')
+        if (qrUrl) {
+          qrImg.src = qrUrl
+          qrImg.style.display = 'block'
+        } else {
+          qrImg.style.display = 'none'
+        }
+
+        document.getElementById('rDate').innerText =
+          formatThaiShortDate(document.getElementById('dateInput').value) ||
+          '22/06/69'
+        document.getElementById('rStars').innerText =
+          document.getElementById('starsRating').value
+
+        document.getElementById('rDen').innerText =
+          document.getElementById('numDen').value || '00'
+        document.getElementById('rRun').innerText =
+          document.getElementById('numRun').value || ''
+
+        const l1 = [1, 2, 3, 4, 5]
+          .map(i => document.getElementById(`line1_${i}`).value || '--')
+          .join('-')
+        const l2 = [1, 2, 3, 4, 5]
+          .map(i => document.getElementById(`line2_${i}`).value || '--')
+          .join('-')
+        document.getElementById('rLine1').innerText = l1
+        document.getElementById('rLine2').innerText = l2
+
+        const threeLine = [1, 2, 3, 4]
+          .map(i => document.getElementById(`three${i}`).value || '---')
+          .join('-')
+        document.getElementById('rThreeLine').innerText = threeLine
+
+        document.getElementById('rKeyNumber').innerText =
+          document.getElementById('keyNumber').value || ''
+        document.getElementById('rWinWord').innerText =
+          document.getElementById('winWord').value || ''
+      }
+
+      function awaitImg(img) {
         return new Promise(resolve => {
-          if (imgElem.complete) return resolve()
-          imgElem.onload = resolve
-          imgElem.onerror = resolve
+          if (!img.src) return resolve()
+          if (img.complete) return resolve()
+          img.onload = resolve
+          img.onerror = resolve
         })
       }
 
       async function generateImage() {
-        // 1. อ่านค่า
-        const type = document.getElementById('lotteryType').value
-        let dateVal = document.getElementById('dateInput').value
-        if (!dateVal) {
-          dateVal = getTodayStr()
-          document.getElementById('dateInput').value = dateVal
-        }
-
-        const data = LOTTERY_DATA[type] || LOTTERY_DATA['lao_normal']
-        const fullDateStr = getFullThaiDate(dateVal)
-        const nums = generateLogic()
-        currentData = { name: data.name, dateStr: fullDateStr, nums }
-
-        // 2. จัดการ UI Loading
         document.getElementById('placeholder').style.display = 'none'
         document.getElementById('previewImg').style.display = 'none'
-        document.getElementById('actionBar').style.display = 'none'
+        document.getElementById('actions').style.display = 'none'
+        document.getElementById('loader').style.display = 'flex'
 
-        const loader = document.getElementById('loader')
-        loader.style.display = 'flex'
-
-        // 3. ยัดข้อมูลลง Template ใหม่
-        const rTitle = document.getElementById('rTitle')
-        rTitle.innerText = data.name
-
-        // ลดขนาดฟอนต์อัตโนมัติถ้าชื่อหวยยาวเกินไป (ให้สอดคล้องกับขนาดใหม่ 1080)
-        if (data.name.length > 15) {
-          rTitle.style.fontSize = '60px'
-        } else if (data.name.length > 10) {
-          rTitle.style.fontSize = '75px'
-        } else {
-          rTitle.style.fontSize = '90px'
-        }
-
-        document.getElementById('rDateFull').innerText = fullDateStr
-
-        // เด่น & วิ่งรูด
-        document.getElementById('rDen1').innerText = nums.den1
-        document.getElementById('rDen2').innerText = nums.den2
-        document.getElementById('rRun').innerText = nums.run
-
-        // สองตัว
-        const grid2D = document.getElementById('rGrid2D')
-        grid2D.innerHTML = nums.twoDigits
-          .map(n => `<div class="num-item">${n}</div>`)
-          .join('')
-
-        // เบิ้ล
-        document.getElementById('rDouble1').innerText = nums.doubles[0]
-        document.getElementById('rDouble2').innerText = nums.doubles[1]
-
-        // สามตัว
-        const grid3D = document.getElementById('rGrid3D')
-        grid3D.innerHTML = nums.threeDigits
-          .map(n => `<div class="num-3item">${n}</div>`)
-          .join('')
-
-        // รูปธง
-        const flagImg = document.getElementById('rFlag')
-        const flagBg = document.getElementById('rFlagBg')
-        flagImg.src = getFlagUrl(data.flag)
-        flagBg.src = getFlagUrl(data.flag)
-
-        // เปลี่ยนสี Header ให้สวยงามตามประเทศแบบ Premium Gradient
-        const header = document.getElementById('cbHeader')
-        if (data.flag === 'th')
-          header.style.background =
-            'linear-gradient(135deg, #7f1d1d 0%, #dc2626 100%)'
-        // แดงเข้มหรู
-        else if (data.flag === 'vn')
-          header.style.background =
-            'linear-gradient(135deg, #9a3412 0%, #ea580c 100%)'
-        // ส้มอิฐ
-        else if (data.flag === 'my')
-          header.style.background =
-            'linear-gradient(135deg, #4c0519 0%, #9f1239 100%)'
-        // แดงไวน์
-        else if (data.flag === 'jp' || data.flag === 'cn' || data.flag === 'hk')
-          header.style.background =
-            'linear-gradient(135deg, #831843 0%, #be185d 100%)'
-        // ชมพูเข้ม
-        else
-          header.style.background =
-            'linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%)' // กรมท่า-น้ำเงิน (ค่าเริ่มต้นที่สวยที่สุด)
+        syncAll()
 
         try {
           await document.fonts.ready
-          await Promise.all([awaitImageLoad(flagImg), awaitImageLoad(flagBg)])
+          await Promise.all([
+            awaitImg(document.getElementById('rFlag')),
+            awaitImg(document.getElementById('creditQrImg')),
+          ])
+          await new Promise(r => setTimeout(r, 400))
 
-          // 4. สั่งถ่ายรูป
-          const renderZone = document.getElementById('renderZone')
-          const canvas = await html2canvas(renderZone, {
-            scale: 1.5, // ขยายให้ภาพชัดขึ้นอีกนิด
+          const canvas = await html2canvas(document.getElementById('sheet'), {
+            scale: 1.25,
             useCORS: true,
-            backgroundColor: '#ffffff',
+            backgroundColor: null,
             logging: false,
           })
 
-          // 5. โชว์รูป
-          currentBase64Image = canvas.toDataURL('image/jpeg', 0.9)
-          const previewImg = document.getElementById('previewImg')
-          previewImg.src = currentBase64Image
+          currentImage = canvas.toDataURL('image/jpeg', 0.95)
+          const img = document.getElementById('previewImg')
+          img.src = currentImage
 
-          loader.style.display = 'none'
-          previewImg.style.display = 'block'
-          document.getElementById('actionBar').style.display = 'flex'
-        } catch (error) {
-          console.error('Render Error:', error)
-          alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง')
-          loader.style.display = 'none'
+          document.getElementById('loader').style.display = 'none'
+          img.style.display = 'block'
+          document.getElementById('actions').style.display = 'grid'
+        } catch (e) {
+          console.error(e)
+          alert('เกิดข้อผิดพลาดในการสร้างภาพ กรุณาลองใหม่อีกครั้ง')
+          document.getElementById('loader').style.display = 'none'
           document.getElementById('placeholder').style.display = 'block'
         }
       }
 
-      // === ACTION FUNCTIONS ===
-      function getFilename() {
-        if (!currentData) return 'joakmu-random.jpg'
-        return `joakmu-${currentData.name.replace(/\s/g, '')}-${Date.now()}.jpg`
-      }
-
       function saveImage() {
-        if (!currentBase64Image) return
+        if (!currentImage) return
         const link = document.createElement('a')
-        link.download = getFilename()
-        link.href = currentBase64Image
+        const dateVal = document.getElementById('dateInput').value || 'date'
+        link.download = `lucky-numbers-${dateVal}.jpg`
+        link.href = currentImage
         link.click()
       }
 
       async function shareImage() {
-        if (!currentBase64Image) return
+        if (!currentImage) return
         try {
-          const res = await fetch(currentBase64Image)
+          const res = await fetch(currentImage)
           const blob = await res.blob()
-          const file = new File([blob], getFilename(), { type: 'image/jpeg' })
-
-          await navigator.share({
-            title: 'โจ๊กหมู - เลขแนวทาง',
-            files: [file],
+          const file = new File([blob], 'lucky-numbers.jpg', {
+            type: 'image/jpeg',
           })
+          await navigator.share({ title: 'เลขนำโชค', files: [file] })
         } catch (err) {
           if (err.name !== 'AbortError') {
-            alert('บราวเซอร์นี้ไม่รองรับการแชร์โดยตรงครับ 🐷')
+            alert(
+              'เบราว์เซอร์นี้ไม่รองรับการแชร์ไฟล์ภาพ กรุณาบันทึกแล้วโพสต์เองนะครับ'
+            )
           }
         }
       }
 
-      // ==========================================
-      // ระบบแคปชั่น 30 แบบ (สุ่มไม่ซ้ำ และเอาตัวเลขออก)
-      // ==========================================
-      const CAPTIONS_LIST = [
-        'วันนี้ขอให้สมหวัง ขอให้แนวทาง[NAME]นี้เป็นแนวทางแห่งความโชคดี โจ๊กหมู 🙏✨',
-        'ขอให้แนวทาง[NAME]นี้พาพี่ๆ หมดหนี้หมดสิน รับทรัพย์ก้อนโต สาธุ 🙏💰',
-        'แจกแนวทาง[NAME]ปังๆ งวดนี้โจ๊กหมูจัดให้! ขอให้รวยๆ เฮงๆ ทุกคนครับ 🐷💸',
-        'เลขสวย[NAME]น่าลุ้น ตามด่วน! ใครเห็นโพสต์นี้ขอให้รับทรัพย์ สาธุ 🙏✨',
-        'มาแล้วครับแนวทาง[NAME]จากโจ๊กหมู! ขอให้โชคเข้าข้างนะค๊าบ 🔥🎯',
-        'หยิบแนวทาง[NAME]ไปลุ้นกันได้เลย! โจ๊กหมูขออวยพรให้งวดนี้แตกตรงๆ 🏆🐽',
-        'สายมู สายลุ้น จัดไปครับ! แนวทาง[NAME] รวยๆ เฮงๆ สาธุ 🙏🌟',
-        'แชร์เก็บไว้เป็นแนวทาง[NAME]ได้เลย! งวดนี้ต้องมีเฮ โจ๊กหมูพาปัง 🚀✨',
-        'ใครรอแนวทาง[NAME]อยู่ จัดไปครับ! ขอให้ใบนี้พาปลดหนี้ สาธุ 🙏💸',
-        'เปิดดวงรับโชค! แนวทาง[NAME]งวดนี้ พาพี่ๆ เฮงๆ ปังๆ รับเงินล้าน 🙏👑',
-        'บุญพาวาสนาส่ง แนวทาง[NAME]ใบนี้ ขอให้เป็นสะพานบุญพาสู่ความรวย 🙏✨',
-        'วันนี้วันดี แนวทาง[NAME]จากโจ๊กหมู จะนำพาโชคลาภมาให้ทุกคนนะครับ 🙏💰',
-        'ใครกดแชร์ แนวทาง[NAME]งวดนี้ขอให้เข้าเป้า หยิบจับอะไรเป็นเงินเป็นทอง 🙏💸',
-        'เตรียมตัวรับทรัพย์! แนวทาง[NAME]งวดนี้ทะลุเป้าแน่นอน โจ๊กหมูอวยพร 🙏🎯',
-        'ขอให้บารมีสิ่งศักดิ์สิทธิ์ดลบันดาลให้แนวทาง[NAME] พาพี่ๆ ถูกรางวัลใหญ่ สาธุ 🙏🍀',
-        'ดวงกำลังมา! ลุยเลยกับแนวทาง[NAME] ขอให้งวดนี้เป็นของเราครับ 🐷✨',
-        'ยิ้มรับทรัพย์แต่เช้า! แนวทาง[NAME]วันนี้ จัดเต็มให้พี่ๆ ทุกคน 🙏💸',
-        'แจกความปังกับแนวทาง[NAME] ใครเลื่อนผ่านถือว่าพลาด ขอให้โชคดีครับ 🙏🚀',
-        'งวดนี้สู้กันใหม่! แนวทาง[NAME]จัดให้แบบเน้นๆ ขอให้รวยเละ 🐷💰',
-        'คัดมาให้แล้วกับแนวทาง[NAME] ขอให้ฟ้าเปิด ทางสว่าง รับโชคใหญ่กันทุกคน 🙏🌟',
-        'หมานๆ เด้อพี่น้อง! แนวทาง[NAME]งวดนี้ ขอให้กระเป๋าตุงกันทุกคน 🐷💸',
-        'ใครเห็นแนวทาง[NAME]ใบนี้ ขอให้หมดเคราะห์ หมดโศก รับแต่โชคลาภ สาธุ 🙏✨',
-        'ลุยต่อไม่รอแล้วนะ! แนวทาง[NAME] วันนี้ขอให้เฮงๆ ปังๆ นะครับ 🙏🎯',
-        'ส่องด่วน! แนวทาง[NAME] จากโจ๊กหมู ขอให้พี่ๆ ถูกหวยรวยเบอร์กันครับ 🐷👑',
-        'งวดนี้โจ๊กหมูมั่นใจ! แนวทาง[NAME] ต้องมาแน่ ขอให้ทุกคนสมหวัง 🙏💰',
-        'ขอให้แนวทาง[NAME]งวดนี้ เปลี่ยนคนธรรมดาเป็นเศรษฐีชั่วข้ามคืน สาธุ 🙏🌟',
-        'จัดไปชุดใหญ่ไฟกระพริบ! แนวทาง[NAME] ขอให้ทุกคนรับทรัพย์รัวๆ 🐷💸',
-        'ใครหาเลขอยู่เชิญทางนี้! แนวทาง[NAME] แบ่งปันฟรีๆ ขอให้เฮงๆ 🙏✨',
-        'วันนี้รวย! แนวทาง[NAME] ขอให้เงินไหลกอง ทองไหลมา สาธุ 🙏💰',
-        'โจ๊กหมูจัดให้ตามคำขอ! แนวทาง[NAME] ขอให้ทุกคนโชคดี มีชัยครับ 🐷🚀',
-      ]
-
-      let availableCaptions = [...CAPTIONS_LIST]
-
-      function getUniqueCaption(lotteryName) {
-        if (availableCaptions.length === 0) {
-          availableCaptions = [...CAPTIONS_LIST] // รีเซ็ตถ้าใช้ครบแล้ว
-        }
-        const randomIndex = Math.floor(Math.random() * availableCaptions.length)
-        const selectedCaption = availableCaptions.splice(randomIndex, 1)[0]
-        return selectedCaption.replace(/\[NAME\]/g, lotteryName)
-      }
-
-      async function copyCaption() {
-        if (!currentData) return
-        const { name, dateStr } = currentData
-
-        // ดึงแคปชั่นที่สุ่มแล้วใส่ชื่อหวยเข้าไป
-        const captionText = getUniqueCaption(name)
-
-        // สร้างแฮชแท็กเฉพาะหวย (ลบเว้นวรรคออกเพื่อให้กดแท็กได้)
-        const hashtagName = name.replace(/\s+/g, '')
-
-        // ฟอร์แมตใหม่: ไม่มีตัวเลข มีแค่ชื่อหวย วันที่ และแคปชั่น พร้อมแฮชแท็กหวย
-        const textToCopy = `🐷 แนวทาง ${name} 🐷\n🗓 ${dateStr}\n\n${captionText}\n\n#โจ๊กหมู #เลขแนวทาง #${hashtagName}`
-
+      function copyCaption() {
+        const data = LOTTERY_DATA[
+          document.getElementById('lotteryType').value
+        ] || { name: 'แนวทาง' }
+        const name = document.getElementById('creditName').value || ''
+        const dateStr = formatThaiShortDate(
+          document.getElementById('dateInput').value
+        )
+        const text = `เลขนำโชค ${data.name} งวด ${dateStr}\nโดย ${name}\n#เลขนำโชค #${data.name.replace(/\s+/g, '')}`
+        const ta = document.createElement('textarea')
+        ta.value = text
+        document.body.appendChild(ta)
+        ta.select()
         try {
-          const textArea = document.createElement('textarea')
-          textArea.value = textToCopy
-          document.body.appendChild(textArea)
-          textArea.select()
           document.execCommand('copy')
-          document.body.removeChild(textArea)
-          alert('📋 คัดลอกแคปชั่นเรียบร้อย!')
-        } catch (err) {
-          alert('คัดลอกไม่สำเร็จครับ กรุณาลองใหม่อีกครั้ง 🙏')
+          alert('คัดลอกแคปชั่นแล้ว')
+        } catch (e) {
+          alert('ไม่สามารถคัดลอกได้')
         }
+        document.body.removeChild(ta)
       }
 
-      // Init
-      document.getElementById('dateInput').value = getTodayStr()
-      if (
-        navigator.canShare &&
-        navigator.canShare({
-          files: [new File([], 't.jpg', { type: 'image/jpeg' })],
-        })
-      ) {
-        document.getElementById('shareBtn').style.display = 'inline-flex'
+      window.onload = function () {
+        const d = new Date()
+        document.getElementById('dateInput').value =
+          `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+        updateSkin()
+        updateLotteryTitle()
+        syncAll()
+
+        if (
+          navigator.canShare &&
+          navigator.canShare({
+            files: [new File([], 't.jpg', { type: 'image/jpeg' })],
+          })
+        ) {
+          document.getElementById('shareBtn').style.display = 'inline-flex'
+        } else {
+          document.getElementById('shareBtn').style.display = 'none'
+        }
       }
     </script>
   </body>
