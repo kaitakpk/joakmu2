@@ -584,6 +584,77 @@
         letter-spacing: 3px;
         z-index: 4;
       }
+
+      /* ===================== RESPONSIVE / MOBILE ===================== */
+      @media (max-width: 900px) {
+        .dashboard {
+          flex-direction: column;
+          height: auto;
+          min-height: 100vh;
+        }
+        .sidebar {
+          width: 100%;
+          max-height: none;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+          order: 2;
+        }
+        .main-view {
+          order: 1;
+          padding: 18px 14px;
+          min-height: auto;
+        }
+        .preview-wrapper {
+          max-width: 100%;
+        }
+        .preview-box {
+          border-radius: 14px;
+        }
+        .actions {
+          gap: 8px;
+        }
+        .act-btn {
+          padding: 12px 4px;
+          font-size: 0.8rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .sidebar {
+          padding: 16px;
+          gap: 14px;
+        }
+        .brand {
+          font-size: 1.2rem;
+        }
+        .row5 {
+          grid-template-columns: repeat(5, 1fr);
+          gap: 4px;
+        }
+        .mini-input {
+          padding: 6px 2px;
+          font-size: 0.85rem;
+        }
+        .card {
+          padding: 12px;
+          gap: 10px;
+        }
+        .main-view {
+          padding: 14px 10px;
+        }
+        .btn-main {
+          font-size: 0.92rem;
+          padding: 12px;
+        }
+      }
+
+      /* Prevent iOS zoom on input focus */
+      @media (max-width: 600px) {
+        .input,
+        select.input {
+          font-size: 16px;
+        }
+      }
     </style>
   </head>
   <body>
