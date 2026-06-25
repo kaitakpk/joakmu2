@@ -20,7 +20,7 @@
         --accent: #b3231f;
         --accent-soft: #d6463f;
 
-        /* sheet tokens — editable via skin */
+        /* sheet tokens */
         --sheet-bg: #fbf7ee;
         --sheet-bg2: #f3ede0;
         --ink: #1d1c1a;
@@ -142,26 +142,19 @@
         width: 100%;
         transition: border-color 0.15s;
       }
+      .input[type="file"] {
+        padding: 6px 11px;
+        font-size: 0.8rem;
+        color: #8b919c;
+      }
       .input:focus,
       .input:hover {
         border-color: var(--accent-soft);
       }
 
-      .row2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-      .row4 {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 6px;
-      }
-      .row5 {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 6px;
-      }
+      .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .row4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+      .row5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
 
       .card {
         background: #0b0d11;
@@ -215,9 +208,7 @@
         font-weight: 700;
         cursor: pointer;
         box-shadow: 0 6px 16px rgba(179, 35, 31, 0.28);
-        transition:
-          transform 0.15s,
-          box-shadow 0.15s;
+        transition: transform 0.15s, box-shadow 0.15s;
       }
       .btn-main:hover {
         transform: translateY(-1px);
@@ -283,18 +274,9 @@
         transform: translateY(-2px);
         background: #1c212a;
       }
-      .act-btn.blue {
-        color: #5db4f0;
-        border-color: #1d4a6e;
-      }
-      .act-btn.green {
-        color: #4fd394;
-        border-color: #1f5c45;
-      }
-      .act-btn.gold {
-        color: #e0b154;
-        border-color: #5c4a1f;
-      }
+      .act-btn.blue { color: #5db4f0; border-color: #1d4a6e; }
+      .act-btn.green { color: #4fd394; border-color: #1f5c45; }
+      .act-btn.gold { color: #e0b154; border-color: #5c4a1f; }
 
       .loader {
         position: absolute;
@@ -315,11 +297,7 @@
         border-top-color: var(--accent-soft);
         animation: sp 0.8s linear infinite;
       }
-      @keyframes sp {
-        to {
-          transform: rotate(360deg);
-        }
-      }
+      @keyframes sp { to { transform: rotate(360deg); } }
 
       /* ===================== RENDER SHEET ===================== */
       .render-zone {
@@ -333,11 +311,7 @@
       .sheet {
         width: 1080px;
         height: 1080px;
-        background: linear-gradient(
-          165deg,
-          var(--sheet-bg) 0%,
-          var(--sheet-bg2) 100%
-        );
+        background: linear-gradient(165deg, var(--sheet-bg) 0%, var(--sheet-bg2) 100%);
         position: relative;
         display: flex;
         flex-direction: column;
@@ -345,19 +319,13 @@
         overflow: hidden;
         font-family: 'Sarabun', sans-serif;
       }
-
       .sheet::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(
-          circle at 50% 0%,
-          rgba(0, 0, 0, 0.04),
-          transparent 55%
-        );
+        background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.04), transparent 55%);
         pointer-events: none;
       }
-
       .frame-line {
         position: absolute;
         inset: 26px;
@@ -393,22 +361,9 @@
         height: 100%;
         object-fit: contain;
       }
-      .credit-text {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-      .credit-name {
-        font-size: 26px;
-        font-weight: 800;
-        color: var(--ink);
-        letter-spacing: 0.3px;
-      }
-      .credit-sub {
-        font-size: 17px;
-        font-weight: 600;
-        color: var(--ink-soft);
-      }
+      .credit-text { display: flex; flex-direction: column; gap: 4px; }
+      .credit-name { font-size: 26px; font-weight: 800; color: var(--ink); letter-spacing: 0.3px; }
+      .credit-sub { font-size: 17px; font-weight: 600; color: var(--ink-soft); }
 
       /* flag top-right */
       .flag-wrap {
@@ -423,22 +378,10 @@
         border: 3px solid #fff;
         z-index: 6;
       }
-      .flag-wrap img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
+      .flag-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-      /* HEADER: title pill + date */
-      .header-area {
-        margin-top: 70px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        z-index: 3;
-      }
+      /* HEADER */
+      .header-area { margin-top: 70px; display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 3; }
       .title-pill {
         position: relative;
         padding: 14px 56px;
@@ -448,212 +391,65 @@
         text-align: center;
         letter-spacing: 1px;
       }
-      .title-pill::before,
-      .title-pill::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        width: 130px;
-        height: 2px;
+      .title-pill::before, .title-pill::after {
+        content: ''; position: absolute; top: 50%; width: 130px; height: 2px;
         background: linear-gradient(90deg, transparent, var(--gold));
       }
-      .title-pill::before {
-        left: -120px;
-        transform: translateY(-50%);
-        background: linear-gradient(90deg, transparent, var(--gold));
-      }
-      .title-pill::after {
-        right: -120px;
-        transform: translateY(-50%) scaleX(-1);
-      }
-
+      .title-pill::before { left: -120px; transform: translateY(-50%); }
+      .title-pill::after { right: -120px; transform: translateY(-50%) scaleX(-1); }
       .date-pill {
-        background: var(--ink);
-        color: var(--sheet-bg);
-        font-size: 32px;
-        font-weight: 700;
-        padding: 9px 30px;
-        border-radius: 30px;
-        letter-spacing: 2px;
+        background: var(--ink); color: var(--sheet-bg); font-size: 32px;
+        font-weight: 700; padding: 9px 30px; border-radius: 30px; letter-spacing: 2px;
       }
 
-      /* MIDDLE: den + run */
+      /* MIDDLE */
       .mid-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 16px;
-        padding: 0 10px;
-        z-index: 3;
+        display: flex; justify-content: space-between; align-items: center;
+        margin-top: 16px; padding: 0 10px; z-index: 3;
       }
-      .den-block,
-      .run-block {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-      }
-      .block-tag {
-        font-size: 28px;
-        font-weight: 700;
-        color: var(--ink-soft);
-        letter-spacing: 1px;
-      }
-      .den-value {
-        font-size: 190px;
-        font-weight: 800;
-        color: var(--red);
-        line-height: 0.85;
-        letter-spacing: -2px;
-      }
-      .run-value {
-        font-size: 98px;
-        font-weight: 800;
-        color: var(--ink);
-        letter-spacing: 2px;
-      }
+      .den-block, .run-block { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+      .block-tag { font-size: 28px; font-weight: 700; color: var(--ink-soft); letter-spacing: 1px; }
+      .den-value { font-size: 190px; font-weight: 800; color: var(--red); line-height: 0.85; letter-spacing: -2px; }
+      .run-value { font-size: 98px; font-weight: 800; color: var(--ink); letter-spacing: 2px; }
 
       .divider {
-        height: 2px;
-        margin: 16px 0 16px;
-        background: repeating-linear-gradient(
-          90deg,
-          var(--gold) 0,
-          var(--gold) 14px,
-          transparent 14px,
-          transparent 26px
-        );
-        opacity: 0.55;
-        z-index: 3;
+        height: 2px; margin: 16px 0 16px;
+        background: repeating-linear-gradient(90deg, var(--gold) 0, var(--gold) 14px, transparent 14px, transparent 26px);
+        opacity: 0.55; z-index: 3;
       }
 
       /* TWO-DIGIT LINES */
-      .two-lines {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        align-items: center;
-        z-index: 3;
-      }
-      .two-line {
-        font-size: 72px;
-        font-weight: 800;
-        color: var(--red-soft);
-        letter-spacing: 2px;
-        text-align: center;
-      }
+      .two-lines { display: flex; flex-direction: column; gap: 14px; align-items: center; z-index: 3; }
+      .two-line { font-size: 72px; font-weight: 800; color: var(--red-soft); letter-spacing: 2px; text-align: center; }
 
       /* THREE-DIGIT LINE */
       .three-line {
-        margin-top: 14px;
-        font-size: 64px;
-        font-weight: 800;
-        color: var(--red);
-        text-align: center;
-        letter-spacing: 1px;
-        z-index: 3;
+        margin-top: 14px; font-size: 64px; font-weight: 800;
+        color: var(--red); text-align: center; letter-spacing: 1px; z-index: 3;
       }
 
       .bottom-area {
-        margin-top: 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        z-index: 3;
+        margin-top: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 3;
       }
-      .key-number {
-        font-size: 40px;
-        font-weight: 700;
-        color: var(--ink);
-        letter-spacing: 4px;
-      }
-      .win-word {
-        font-size: 38px;
-        font-weight: 800;
-        color: var(--gold);
-        letter-spacing: 6px;
-      }
+      .key-number { font-size: 40px; font-weight: 700; color: var(--ink); letter-spacing: 4px; }
+      .win-word { font-size: 38px; font-weight: 800; color: var(--gold); letter-spacing: 6px; }
 
-      .stars-row {
-        position: absolute;
-        bottom: 46px;
-        right: 56px;
-        font-size: 20px;
-        color: var(--gold);
-        letter-spacing: 3px;
-        z-index: 4;
-      }
+      .stars-row { position: absolute; bottom: 46px; right: 56px; font-size: 20px; color: var(--gold); letter-spacing: 3px; z-index: 4; }
 
-      /* ===================== RESPONSIVE / MOBILE ===================== */
+      /* MOBILE */
       @media (max-width: 900px) {
-        .dashboard {
-          flex-direction: column;
-          height: auto;
-          min-height: 100vh;
-        }
-        .sidebar {
-          width: 100%;
-          max-height: none;
-          border-right: none;
-          border-bottom: 1px solid var(--border);
-          order: 2;
-        }
-        .main-view {
-          order: 1;
-          padding: 18px 14px;
-          min-height: auto;
-        }
-        .preview-wrapper {
-          max-width: 100%;
-        }
-        .preview-box {
-          border-radius: 14px;
-        }
-        .actions {
-          gap: 8px;
-        }
-        .act-btn {
-          padding: 12px 4px;
-          font-size: 0.8rem;
-        }
+        .dashboard { flex-direction: column; height: auto; min-height: 100vh; }
+        .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); order: 2; }
+        .main-view { order: 1; padding: 18px 14px; }
+        .preview-box { border-radius: 14px; }
       }
-
       @media (max-width: 480px) {
-        .sidebar {
-          padding: 16px;
-          gap: 14px;
-        }
-        .brand {
-          font-size: 1.2rem;
-        }
-        .row5 {
-          grid-template-columns: repeat(5, 1fr);
-          gap: 4px;
-        }
-        .mini-input {
-          padding: 6px 2px;
-          font-size: 0.85rem;
-        }
-        .card {
-          padding: 12px;
-          gap: 10px;
-        }
-        .main-view {
-          padding: 14px 10px;
-        }
-        .btn-main {
-          font-size: 0.92rem;
-          padding: 12px;
-        }
+        .sidebar { padding: 16px; gap: 14px; }
+        .row5 { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+        .mini-input { padding: 6px 2px; font-size: 0.85rem; }
       }
-
-      /* Prevent iOS zoom on input focus */
       @media (max-width: 600px) {
-        .input,
-        select.input {
-          font-size: 16px;
-        }
+        .input, select.input { font-size: 16px; }
       }
     </style>
   </head>
@@ -662,10 +458,10 @@
       <!-- SIDEBAR -->
       <div class="sidebar">
         <div class="brand">
-          <span class="dot"></span>เลขนำโชค · Minimal Edition
+          <span class="dot"></span>เลขนำโชค · วิน 5 ตัว
         </div>
         <div class="subtitle">
-          สร้างภาพชุดเลขสไตล์เรียบ สะอาด ใส่เครดิตของคุณเองได้
+          อัปโหลด QR Code ของคุณ และสุ่มเลขวินระดับโปร
         </div>
 
         <div class="group">
@@ -673,32 +469,15 @@
           <div class="card">
             <div class="field">
               <label>ชื่อเพจ / ชื่อร้าน</label>
-              <input
-                class="input"
-                id="creditName"
-                value="huay321"
-                oninput="syncAll()"
-              />
+              <input class="input" id="creditName" value="huay321" oninput="syncAll()" />
             </div>
             <div class="field">
-              <label>ข้อความรอง (ถ้ามี เช่น ID ไลน์ / เว็บไซต์)</label>
-              <input
-                class="input"
-                id="creditSub"
-                value=""
-                placeholder="เช่น Line: @huay321"
-                oninput="syncAll()"
-              />
+              <label>ข้อความรอง (ถ้ามี เช่น ID ไลน์)</label>
+              <input class="input" id="creditSub" value="" placeholder="เช่น Line: @huay321" oninput="syncAll()" />
             </div>
             <div class="field">
-              <label>รูป QR Code (วาง URL รูปภาพ หรือเว้นว่างไว้)</label>
-              <input
-                class="input"
-                id="creditQr"
-                value=""
-                placeholder="https://..."
-                oninput="syncAll()"
-              />
+              <label>อัปโหลด QR Code (จากในเครื่อง)</label>
+              <input class="input" type="file" id="creditQr" accept="image/*" onchange="handleQrUpload(event)" />
             </div>
           </div>
         </div>
@@ -715,11 +494,7 @@
 
         <div class="group">
           <div class="section-label">ประเภทหวย / แนวทาง</div>
-          <select
-            class="input"
-            id="lotteryType"
-            onchange="updateLotteryTitle()"
-          >
+          <select class="input" id="lotteryType" onchange="updateLotteryTitle()">
             <optgroup label="🇹🇭 หวยไทย">
               <option value="thai_gov">หวยรัฐบาลไทย</option>
             </optgroup>
@@ -729,37 +504,18 @@
               <option value="lao_extra">ลาว Extra</option>
               <option value="lao_hd">ลาว HD</option>
               <option value="lao_star">ลาว Star</option>
-              <option value="lao_samakkhi">ลาวสามัคคี</option>
-              <option value="lao_vip">ลาว VIP</option>
-              <option value="lao_redcross">ลาวกาชาด</option>
             </optgroup>
             <optgroup label="🇻🇳 หวยฮานอย">
               <option value="hanoi_normal">ฮานอยปกติ</option>
               <option value="hanoi_special">ฮานอยพิเศษ</option>
               <option value="hanoi_vip">ฮานอย VIP</option>
-              <option value="hanoi_extra">ฮานอย EXTRA</option>
-            </optgroup>
-            <optgroup label="🇲🇾 หวยมาเลย์">
-              <option value="malay_normal">มาเลย์ปกติ</option>
-              <option value="malay_vip">มาเลย์ VIP</option>
-            </optgroup>
-            <optgroup label="📈 หุ้นต่างประเทศ">
-              <option value="stock_nikkei">นิเคอิ</option>
-              <option value="stock_hsi">ฮั่งเส็ง</option>
-              <option value="stock_dow">ดาวโจนส์</option>
-              <option value="stock_china">หุ้นจีน</option>
             </optgroup>
           </select>
         </div>
 
         <div class="group">
           <div class="section-label">วันที่งวด</div>
-          <input
-            type="date"
-            id="dateInput"
-            class="input"
-            onchange="syncAll()"
-          />
+          <input type="date" id="dateInput" class="input" onchange="syncAll()" />
         </div>
 
         <div class="group">
@@ -773,177 +529,59 @@
         </div>
 
         <div class="group">
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
-          >
-            <div class="section-label" style="margin: 0">ชุดตัวเลข</div>
-            <button class="btn-random" onclick="randomizeAll()">
-              🎲 สุ่มชุดใหม่
-            </button>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="section-label" style="margin: 0">ชุดตัวเลข (ระบบเลขวิน)</div>
+            <button class="btn-random" onclick="randomizeAll()">🎲 สุ่มวินใหม่</button>
           </div>
           <div class="card">
             <div>
+              <div class="mini-label">เลขวินฐาน (5 ตัว)</div>
+              <input class="input mini-input" id="keyNumber" maxlength="8" value="13579" oninput="syncAll()" />
+            </div>
+            <div>
               <div class="mini-label">เด่น / วิ่ง</div>
               <div class="row2">
-                <input
-                  class="input mini-input"
-                  id="numDen"
-                  maxlength="2"
-                  value="73"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="numRun"
-                  maxlength="11"
-                  value="77-33"
-                  oninput="syncAll()"
-                />
+                <input class="input mini-input" id="numDen" maxlength="2" value="73" oninput="syncAll()" />
+                <input class="input mini-input" id="numRun" maxlength="11" value="77-33" oninput="syncAll()" />
               </div>
             </div>
             <div>
-              <div class="mini-label">สองตัว บรรทัด 1 (5 ชุด)</div>
+              <div class="mini-label">วินสองตัว บรรทัด 1 (5 คู่)</div>
               <div class="row5">
-                <input
-                  class="input mini-input"
-                  id="line1_1"
-                  maxlength="2"
-                  value="70"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="line1_2"
-                  maxlength="2"
-                  value="74"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="line1_3"
-                  maxlength="2"
-                  value="75"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="line1_4"
-                  maxlength="2"
-                  value="79"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="line1_5"
-                  maxlength="2"
-                  value="30"
-                  oninput="syncAll()"
-                />
+                <input class="input mini-input" id="line1_1" value="13" oninput="syncAll()" />
+                <input class="input mini-input" id="line1_2" value="15" oninput="syncAll()" />
+                <input class="input mini-input" id="line1_3" value="17" oninput="syncAll()" />
+                <input class="input mini-input" id="line1_4" value="19" oninput="syncAll()" />
+                <input class="input mini-input" id="line1_5" value="35" oninput="syncAll()" />
               </div>
             </div>
             <div>
-              <div class="mini-label">สองตัว บรรทัด 2 (5 ชุด)</div>
+              <div class="mini-label">วินสองตัว บรรทัด 2 (5 คู่)</div>
               <div class="row5">
-                <input
-                  class="input mini-input"
-                  id="line2_1"
-                  maxlength="2"
-                  value="34"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="line2_2"
-                  maxlength="2"
-                  value="35"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="line2_3"
-                  maxlength="2"
-                  value="39"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="line2_4"
-                  maxlength="2"
-                  value="04"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="line2_5"
-                  maxlength="2"
-                  value="05"
-                  oninput="syncAll()"
-                />
+                <input class="input mini-input" id="line2_1" value="37" oninput="syncAll()" />
+                <input class="input mini-input" id="line2_2" value="39" oninput="syncAll()" />
+                <input class="input mini-input" id="line2_3" value="57" oninput="syncAll()" />
+                <input class="input mini-input" id="line2_4" value="59" oninput="syncAll()" />
+                <input class="input mini-input" id="line2_5" value="79" oninput="syncAll()" />
               </div>
             </div>
             <div>
-              <div class="mini-label">สามตัว (4 ชุด)</div>
+              <div class="mini-label">วินสามตัว (4 ชุด)</div>
               <div class="row4">
-                <input
-                  class="input mini-input"
-                  id="three1"
-                  maxlength="3"
-                  value="730"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="three2"
-                  maxlength="3"
-                  value="734"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="three3"
-                  maxlength="3"
-                  value="735"
-                  oninput="syncAll()"
-                />
-                <input
-                  class="input mini-input"
-                  id="three4"
-                  maxlength="3"
-                  value="739"
-                  oninput="syncAll()"
-                />
+                <input class="input mini-input" id="three1" value="135" oninput="syncAll()" />
+                <input class="input mini-input" id="three2" value="357" oninput="syncAll()" />
+                <input class="input mini-input" id="three3" value="579" oninput="syncAll()" />
+                <input class="input mini-input" id="three4" value="179" oninput="syncAll()" />
               </div>
-            </div>
-            <div>
-              <div class="mini-label">เลขสำคัญ (key number)</div>
-              <input
-                class="input mini-input"
-                id="keyNumber"
-                maxlength="8"
-                value="730459"
-                oninput="syncAll()"
-              />
             </div>
             <div>
               <div class="mini-label">คำลงท้าย</div>
-              <input
-                class="input mini-input"
-                id="winWord"
-                maxlength="10"
-                value="วิน"
-                oninput="syncAll()"
-              />
+              <input class="input mini-input" id="winWord" maxlength="10" value="วิน" oninput="syncAll()" />
             </div>
           </div>
         </div>
 
-        <button class="btn-main" onclick="generateImage()">
-          ✨ สลักภาพเลขนำโชค
-        </button>
+        <button class="btn-main" onclick="generateImage()">✨ สลักภาพเลขนำโชค</button>
       </div>
 
       <!-- MAIN VIEW -->
@@ -952,29 +590,19 @@
           <div class="preview-box">
             <div class="loader" id="loader">
               <div class="spin"></div>
-              <p style="font-weight: 600; font-size: 0.95rem">
-                กำลังสร้างภาพ...
-              </p>
+              <p style="font-weight: 600; font-size: 0.95rem">กำลังสร้างภาพ...</p>
             </div>
             <div class="placeholder" id="placeholder">
               <span class="ic">🎯</span>
               <p style="font-weight: 700">ภาพเลขนำโชคสไตล์มินิมอล</p>
-              <p style="font-size: 0.82rem; margin-top: 6px; color: #6b7280">
-                ตั้งค่าเลขและเครดิตของคุณ แล้วกดสลักภาพ
-              </p>
+              <p style="font-size: 0.82rem; margin-top: 6px; color: #6b7280">ตั้งค่าเลขและเครดิตของคุณ แล้วกดสลักภาพ</p>
             </div>
             <img id="previewImg" class="preview-img" alt="preview" />
           </div>
           <div class="actions" id="actions">
-            <button class="act-btn blue" onclick="saveImage()">
-              💾 บันทึก
-            </button>
-            <button class="act-btn green" id="shareBtn" onclick="shareImage()">
-              📤 แชร์
-            </button>
-            <button class="act-btn gold" onclick="copyCaption()">
-              📋 แคปชั่น
-            </button>
+            <button class="act-btn blue" onclick="saveImage()">💾 บันทึก</button>
+            <button class="act-btn green" id="shareBtn" onclick="shareImage()">📤 แชร์</button>
+            <button class="act-btn gold" onclick="copyCaption()">📋 แคปชั่น</button>
           </div>
         </div>
       </div>
@@ -984,7 +612,6 @@
     <div class="render-zone">
       <div class="sheet" id="sheet">
         <div class="frame-line"></div>
-
         <div class="credit-block">
           <div class="credit-qr" id="creditQrBox">
             <img id="creditQrImg" src="" alt="qr" style="display: none" />
@@ -994,18 +621,14 @@
             <div class="credit-sub" id="rCreditSub" style="display: none"></div>
           </div>
         </div>
-
         <div class="flag-wrap">
           <img id="rFlag" src="" alt="flag" crossorigin="anonymous" />
         </div>
-
         <div class="stars-row" id="rStars">★★★★★</div>
-
         <div class="header-area">
           <div class="title-pill" id="rTitle">ลาวพัฒนา</div>
           <div class="date-pill" id="rDate">22/06/69</div>
         </div>
-
         <div class="mid-row">
           <div class="den-block">
             <div class="block-tag">เด่น</div>
@@ -1016,18 +639,14 @@
             <div class="run-value" id="rRun">77-33</div>
           </div>
         </div>
-
         <div class="divider"></div>
-
         <div class="two-lines">
-          <div class="two-line" id="rLine1">70-74-75-79-30</div>
-          <div class="two-line" id="rLine2">34-35-39-04-05</div>
+          <div class="two-line" id="rLine1">13-15-17-19-35</div>
+          <div class="two-line" id="rLine2">37-39-57-59-79</div>
         </div>
-
-        <div class="three-line" id="rThreeLine">730-734-735-739</div>
-
+        <div class="three-line" id="rThreeLine">135-357-579-179</div>
         <div class="bottom-area">
-          <div class="key-number" id="rKeyNumber">730459</div>
+          <div class="key-number" id="rKeyNumber">13579</div>
           <div class="win-word" id="rWinWord">วิน</div>
         </div>
       </div>
@@ -1041,316 +660,218 @@
         lao_extra: { name: 'ลาว Extra', flag: 'la' },
         lao_hd: { name: 'ลาว HD', flag: 'la' },
         lao_star: { name: 'ลาว Star', flag: 'la' },
-        lao_samakkhi: { name: 'ลาวสามัคคี', flag: 'la' },
-        lao_vip: { name: 'ลาว VIP', flag: 'la' },
-        lao_redcross: { name: 'ลาวกาชาด', flag: 'la' },
         hanoi_normal: { name: 'ฮานอยปกติ', flag: 'vn' },
         hanoi_special: { name: 'ฮานอยพิเศษ', flag: 'vn' },
-        hanoi_vip: { name: 'ฮานอย VIP', flag: 'vn' },
-        hanoi_extra: { name: 'ฮานอย EXTRA', flag: 'vn' },
-        malay_normal: { name: 'มาเลย์ปกติ', flag: 'my' },
-        malay_vip: { name: 'มาเลย์ VIP', flag: 'my' },
-        stock_nikkei: { name: 'นิเคอิ', flag: 'jp' },
-        stock_hsi: { name: 'ฮั่งเส็ง', flag: 'hk' },
-        stock_dow: { name: 'ดาวโจนส์', flag: 'us' },
-        stock_china: { name: 'หุ้นจีน', flag: 'cn' },
+        hanoi_vip: { name: 'ฮานอย VIP', flag: 'vn' }
       }
 
       const SKINS = {
-        cream: {
-          bg: '#fbf7ee',
-          bg2: '#f3ede0',
-          ink: '#1d1c1a',
-          inkSoft: '#6b6258',
-          red: '#9c2020',
-          redSoft: '#b9433c',
-          gold: '#b08a3e',
-        },
-        ivory: {
-          bg: '#fdf9f0',
-          bg2: '#f6ecd8',
-          ink: '#23201a',
-          inkSoft: '#766c5a',
-          red: '#a3361f',
-          redSoft: '#c4583a',
-          gold: '#c79a4b',
-        },
-        rose: {
-          bg: '#fdf2f0',
-          bg2: '#f6e1de',
-          ink: '#2a1b1b',
-          inkSoft: '#8a6260',
-          red: '#a3243f',
-          redSoft: '#c14a5e',
-          gold: '#bb8a5a',
-        },
-        slate: {
-          bg: '#f3f5f7',
-          bg2: '#e6eaee',
-          ink: '#1d242b',
-          inkSoft: '#5e6b76',
-          red: '#7a2030',
-          redSoft: '#9c3d4a',
-          gold: '#7d8a96',
-        },
+        cream: { bg: '#fbf7ee', bg2: '#f3ede0', ink: '#1d1c1a', inkSoft: '#6b6258', red: '#9c2020', redSoft: '#b9433c', gold: '#b08a3e' },
+        ivory: { bg: '#fdf9f0', bg2: '#f6ecd8', ink: '#23201a', inkSoft: '#766c5a', red: '#a3361f', redSoft: '#c4583a', gold: '#c79a4b' },
+        rose:  { bg: '#fdf2f0', bg2: '#f6e1de', ink: '#2a1b1b', inkSoft: '#8a6260', red: '#a3243f', redSoft: '#c14a5e', gold: '#bb8a5a' },
+        slate: { bg: '#f3f5f7', bg2: '#e6eaee', ink: '#1d242b', inkSoft: '#5e6b76', red: '#7a2030', redSoft: '#9c3d4a', gold: '#7d8a96' }
       }
 
-      let currentImage = null
+      let currentImage = null;
 
-      function getFlagUrl(code) {
-        return `https://flagcdn.com/w320/${code}.png`
-      }
+      function getFlagUrl(code) { return `https://flagcdn.com/w320/${code}.png` }
 
       function updateSkin() {
-        const skin = SKINS[document.getElementById('paperSkin').value]
-        const root = document.documentElement.style
-        root.setProperty('--sheet-bg', skin.bg)
-        root.setProperty('--sheet-bg2', skin.bg2)
-        root.setProperty('--ink', skin.ink)
-        root.setProperty('--ink-soft', skin.inkSoft)
-        root.setProperty('--red', skin.red)
-        root.setProperty('--red-soft', skin.redSoft)
-        root.setProperty('--gold', skin.gold)
+        const skin = SKINS[document.getElementById('paperSkin').value];
+        const root = document.documentElement.style;
+        root.setProperty('--sheet-bg', skin.bg);
+        root.setProperty('--sheet-bg2', skin.bg2);
+        root.setProperty('--ink', skin.ink);
+        root.setProperty('--ink-soft', skin.inkSoft);
+        root.setProperty('--red', skin.red);
+        root.setProperty('--red-soft', skin.redSoft);
+        root.setProperty('--gold', skin.gold);
       }
 
       function updateLotteryTitle() {
-        const data = LOTTERY_DATA[
-          document.getElementById('lotteryType').value
-        ] || { name: 'แนวทาง', flag: 'th' }
-        document.getElementById('rTitle').innerText = data.name
-        document.getElementById('rFlag').src = getFlagUrl(data.flag)
+        const data = LOTTERY_DATA[document.getElementById('lotteryType').value] || { name: 'แนวทาง', flag: 'th' };
+        document.getElementById('rTitle').innerText = data.name;
+        document.getElementById('rFlag').src = getFlagUrl(data.flag);
       }
 
       function formatThaiShortDate(dateVal) {
-        if (!dateVal) return ''
-        const d = new Date(dateVal)
-        const dd = String(d.getDate()).padStart(2, '0')
-        const mm = String(d.getMonth() + 1).padStart(2, '0')
-        const yy = String((d.getFullYear() + 543) % 100).padStart(2, '0')
-        return `${dd}/${mm}/${yy}`
+        if (!dateVal) return '';
+        const d = new Date(dateVal);
+        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${String((d.getFullYear() + 543) % 100).padStart(2, '0')}`;
       }
 
-      function secureRandom(min, max) {
-        const arr = new Uint32Array(1)
-        window.crypto.getRandomValues(arr)
-        return Math.floor((arr[0] / (0xffffffff + 1)) * (max - min + 1)) + min
+      let qrBase64Data = "";
+      function handleQrUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            qrBase64Data = e.target.result;
+            const img = document.getElementById('creditQrImg');
+            img.src = qrBase64Data;
+            img.style.display = 'block';
+            syncAll();
+          };
+          reader.readAsDataURL(file);
+        } else {
+            qrBase64Data = "";
+            document.getElementById('creditQrImg').style.display = 'none';
+            syncAll();
+        }
       }
 
-      function pad2(n) {
-        return String(n).padStart(2, '0')
-      }
-      function pad3(n) {
-        return String(n).padStart(3, '0')
-      }
-
+      // ระบบสุ่มเลขวิน 5 ตัว (หลักการจับคู่แท้จริง)
       function randomizeAll() {
-        const den = secureRandom(0, 99)
-        const denStr = pad2(den)
-        const d1 = denStr[0],
-          d2 = denStr[1]
-
-        const runA = pad2(secureRandom(0, 9) * 11)
-        const runB = pad2(secureRandom(0, 9) * 11)
-        document.getElementById('numRun').value = `${runA}-${runB}`
-
-        const usedTwo = new Set()
-        const pickTwo = () => {
-          let v
-          do {
-            v = pad2(secureRandom(0, 99))
-          } while (usedTwo.has(v))
-          usedTwo.add(v)
-          return v
+        // 1. สุ่มเลขฐาน 5 ตัว ไม่ซ้ำกัน (0-9)
+        let baseDigits = [];
+        while(baseDigits.length < 5) {
+            let r = Math.floor(Math.random() * 10);
+            if(!baseDigits.includes(r)) baseDigits.push(r);
         }
-        document.getElementById('numDen').value = denStr
-        for (let i = 1; i <= 5; i++)
-          document.getElementById(`line1_${i}`).value = pickTwo()
-        for (let i = 1; i <= 5; i++)
-          document.getElementById(`line2_${i}`).value = pickTwo()
+        baseDigits.sort((a,b) => a-b); // เรียงให้สวยงาม
+        document.getElementById('keyNumber').value = baseDigits.join('');
 
-        const usedThree = new Set()
-        const pickThree = () => {
-          let v
-          do {
-            v = pad3(secureRandom(0, 999))
-          } while (usedThree.has(v))
-          usedThree.add(v)
-          return v
+        // 2. จับวิน 2 ตัว (จะได้ 10 คู่พอดีเป๊ะ)
+        let pairs = [];
+        for(let i = 0; i < baseDigits.length; i++){
+            for(let j = i + 1; j < baseDigits.length; j++){
+                pairs.push(`${baseDigits[i]}${baseDigits[j]}`);
+            }
         }
-        for (let i = 1; i <= 4; i++)
-          document.getElementById(`three${i}`).value = pickThree()
+        pairs.sort(() => Math.random() - 0.5); // สลับลำดับให้ดู Random
+        
+        for (let i = 1; i <= 5; i++) document.getElementById(`line1_${i}`).value = pairs[i-1];
+        for (let i = 1; i <= 5; i++) document.getElementById(`line2_${i}`).value = pairs[i+4];
 
-        document.getElementById('keyNumber').value =
-          pad3(secureRandom(0, 999)) + pad3(secureRandom(0, 999)).slice(0, 3)
+        // 3. จับวิน 3 ตัว (สุ่มจับมา 4 ชุด จากความเป็นไปได้ 10 ชุด)
+        let triples = [];
+        for(let i = 0; i < baseDigits.length; i++){
+            for(let j = i + 1; j < baseDigits.length; j++){
+                for(let k = j + 1; k < baseDigits.length; k++){
+                    triples.push(`${baseDigits[i]}${baseDigits[j]}${baseDigits[k]}`);
+                }
+            }
+        }
+        triples.sort(() => Math.random() - 0.5);
+        for (let i = 1; i <= 4; i++) document.getElementById(`three${i}`).value = triples[i-1];
 
-        syncAll()
+        // 4. สุ่มเด่น/วิ่ง (ดึงมาจากเลขฐาน 5 ตัวนั่นแหละ จะได้แม่นๆ)
+        let denDigits = [...baseDigits].sort(() => Math.random() - 0.5).slice(0, 2);
+        document.getElementById('numDen').value = denDigits.join('');
+        document.getElementById('numRun').value = `${denDigits[0]}${denDigits[0]}-${denDigits[1]}${denDigits[1]}`;
+
+        syncAll();
       }
 
       function syncAll() {
-        document.getElementById('rCreditName').innerText =
-          document.getElementById('creditName').value || ' '
-        const sub = document.getElementById('creditSub').value
-        const subEl = document.getElementById('rCreditSub')
-        if (sub) {
-          subEl.style.display = 'block'
-          subEl.innerText = sub
-        } else {
-          subEl.style.display = 'none'
-        }
+        document.getElementById('rCreditName').innerText = document.getElementById('creditName').value || ' ';
+        const sub = document.getElementById('creditSub').value;
+        const subEl = document.getElementById('rCreditSub');
+        if (sub) { subEl.style.display = 'block'; subEl.innerText = sub; } else { subEl.style.display = 'none'; }
+        
+        const qrBox = document.getElementById('creditQrBox');
+        if (qrBase64Data) { qrBox.style.display = 'flex'; } else { qrBox.style.display = 'none'; }
 
-        const qrUrl = document.getElementById('creditQr').value
-        const qrImg = document.getElementById('creditQrImg')
-        if (qrUrl) {
-          qrImg.src = qrUrl
-          qrImg.style.display = 'block'
-        } else {
-          qrImg.style.display = 'none'
-        }
+        document.getElementById('rDate').innerText = formatThaiShortDate(document.getElementById('dateInput').value);
+        document.getElementById('rStars').innerText = document.getElementById('starsRating').value;
+        document.getElementById('rDen').innerText = document.getElementById('numDen').value || '00';
+        document.getElementById('rRun').innerText = document.getElementById('numRun').value || '';
 
-        document.getElementById('rDate').innerText =
-          formatThaiShortDate(document.getElementById('dateInput').value) ||
-          '22/06/69'
-        document.getElementById('rStars').innerText =
-          document.getElementById('starsRating').value
+        const l1 = [1, 2, 3, 4, 5].map(i => document.getElementById(`line1_${i}`).value || '--').join('-');
+        const l2 = [1, 2, 3, 4, 5].map(i => document.getElementById(`line2_${i}`).value || '--').join('-');
+        document.getElementById('rLine1').innerText = l1;
+        document.getElementById('rLine2').innerText = l2;
 
-        document.getElementById('rDen').innerText =
-          document.getElementById('numDen').value || '00'
-        document.getElementById('rRun').innerText =
-          document.getElementById('numRun').value || ''
-
-        const l1 = [1, 2, 3, 4, 5]
-          .map(i => document.getElementById(`line1_${i}`).value || '--')
-          .join('-')
-        const l2 = [1, 2, 3, 4, 5]
-          .map(i => document.getElementById(`line2_${i}`).value || '--')
-          .join('-')
-        document.getElementById('rLine1').innerText = l1
-        document.getElementById('rLine2').innerText = l2
-
-        const threeLine = [1, 2, 3, 4]
-          .map(i => document.getElementById(`three${i}`).value || '---')
-          .join('-')
-        document.getElementById('rThreeLine').innerText = threeLine
-
-        document.getElementById('rKeyNumber').innerText =
-          document.getElementById('keyNumber').value || ''
-        document.getElementById('rWinWord').innerText =
-          document.getElementById('winWord').value || ''
+        const threeLine = [1, 2, 3, 4].map(i => document.getElementById(`three${i}`).value || '---').join('-');
+        document.getElementById('rThreeLine').innerText = threeLine;
+        document.getElementById('rKeyNumber').innerText = document.getElementById('keyNumber').value || '';
+        document.getElementById('rWinWord').innerText = document.getElementById('winWord').value || '';
       }
 
       function awaitImg(img) {
         return new Promise(resolve => {
-          if (!img.src) return resolve()
-          if (img.complete) return resolve()
-          img.onload = resolve
-          img.onerror = resolve
-        })
+          if (!img.src) return resolve();
+          if (img.complete) return resolve();
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
       }
 
       async function generateImage() {
-        document.getElementById('placeholder').style.display = 'none'
-        document.getElementById('previewImg').style.display = 'none'
-        document.getElementById('actions').style.display = 'none'
-        document.getElementById('loader').style.display = 'flex'
-
-        syncAll()
+        document.getElementById('placeholder').style.display = 'none';
+        document.getElementById('previewImg').style.display = 'none';
+        document.getElementById('actions').style.display = 'none';
+        document.getElementById('loader').style.display = 'flex';
+        syncAll();
 
         try {
-          await document.fonts.ready
-          await Promise.all([
-            awaitImg(document.getElementById('rFlag')),
-            awaitImg(document.getElementById('creditQrImg')),
-          ])
-          await new Promise(r => setTimeout(r, 400))
+          await document.fonts.ready;
+          await Promise.all([ awaitImg(document.getElementById('rFlag')), awaitImg(document.getElementById('creditQrImg')) ]);
+          await new Promise(r => setTimeout(r, 400));
 
           const canvas = await html2canvas(document.getElementById('sheet'), {
-            scale: 1.25,
-            useCORS: true,
-            backgroundColor: null,
-            logging: false,
-          })
+            scale: 1.25, useCORS: true, backgroundColor: null, logging: false
+          });
 
-          currentImage = canvas.toDataURL('image/jpeg', 0.95)
-          const img = document.getElementById('previewImg')
-          img.src = currentImage
+          currentImage = canvas.toDataURL('image/jpeg', 0.95);
+          const img = document.getElementById('previewImg');
+          img.src = currentImage;
 
-          document.getElementById('loader').style.display = 'none'
-          img.style.display = 'block'
-          document.getElementById('actions').style.display = 'grid'
+          document.getElementById('loader').style.display = 'none';
+          img.style.display = 'block';
+          document.getElementById('actions').style.display = 'grid';
         } catch (e) {
-          console.error(e)
-          alert('เกิดข้อผิดพลาดในการสร้างภาพ กรุณาลองใหม่อีกครั้ง')
-          document.getElementById('loader').style.display = 'none'
-          document.getElementById('placeholder').style.display = 'block'
+          alert('เกิดข้อผิดพลาดในการสร้างภาพ กรุณาลองใหม่อีกครั้ง');
+          document.getElementById('loader').style.display = 'none';
+          document.getElementById('placeholder').style.display = 'block';
         }
       }
 
       function saveImage() {
-        if (!currentImage) return
-        const link = document.createElement('a')
-        const dateVal = document.getElementById('dateInput').value || 'date'
-        link.download = `lucky-numbers-${dateVal}.jpg`
-        link.href = currentImage
-        link.click()
+        if (!currentImage) return;
+        const link = document.createElement('a');
+        const dateVal = document.getElementById('dateInput').value || 'date';
+        link.download = `lucky-numbers-win-${dateVal}.jpg`;
+        link.href = currentImage;
+        link.click();
       }
 
       async function shareImage() {
-        if (!currentImage) return
+        if (!currentImage) return;
         try {
-          const res = await fetch(currentImage)
-          const blob = await res.blob()
-          const file = new File([blob], 'lucky-numbers.jpg', {
-            type: 'image/jpeg',
-          })
-          await navigator.share({ title: 'เลขนำโชค', files: [file] })
+          const res = await fetch(currentImage);
+          const blob = await res.blob();
+          const file = new File([blob], 'lucky-numbers.jpg', { type: 'image/jpeg' });
+          await navigator.share({ title: 'เลขนำโชค', files: [file] });
         } catch (err) {
-          if (err.name !== 'AbortError') {
-            alert(
-              'เบราว์เซอร์นี้ไม่รองรับการแชร์ไฟล์ภาพ กรุณาบันทึกแล้วโพสต์เองนะครับ'
-            )
-          }
+          if (err.name !== 'AbortError') alert('เบราว์เซอร์นี้ไม่รองรับการแชร์ไฟล์ภาพ กรุณาบันทึกแล้วโพสต์เองนะครับ');
         }
       }
 
       function copyCaption() {
-        const data = LOTTERY_DATA[
-          document.getElementById('lotteryType').value
-        ] || { name: 'แนวทาง' }
-        const name = document.getElementById('creditName').value || ''
-        const dateStr = formatThaiShortDate(
-          document.getElementById('dateInput').value
-        )
-        const text = `เลขนำโชค ${data.name} งวด ${dateStr}\nโดย ${name}\n#เลขนำโชค #${data.name.replace(/\s+/g, '')}`
-        const ta = document.createElement('textarea')
-        ta.value = text
-        document.body.appendChild(ta)
-        ta.select()
-        try {
-          document.execCommand('copy')
-          alert('คัดลอกแคปชั่นแล้ว')
-        } catch (e) {
-          alert('ไม่สามารถคัดลอกได้')
-        }
-        document.body.removeChild(ta)
+        const data = LOTTERY_DATA[document.getElementById('lotteryType').value] || { name: 'แนวทาง' };
+        const name = document.getElementById('creditName').value || '';
+        const dateStr = formatThaiShortDate(document.getElementById('dateInput').value);
+        const text = `เลขนำโชค ${data.name} งวด ${dateStr}\nเลขวินเข้าเต็มๆ\nโดย ${name}\n#เลขนำโชค #${data.name.replace(/\s+/g, '')}`;
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); alert('คัดลอกแคปชั่นแล้ว'); } catch (e) { alert('ไม่สามารถคัดลอกได้'); }
+        document.body.removeChild(ta);
       }
 
       window.onload = function () {
-        const d = new Date()
-        document.getElementById('dateInput').value =
-          `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-        updateSkin()
-        updateLotteryTitle()
-        syncAll()
+        const d = new Date();
+        document.getElementById('dateInput').value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        updateSkin();
+        updateLotteryTitle();
+        syncAll();
 
-        if (
-          navigator.canShare &&
-          navigator.canShare({
-            files: [new File([], 't.jpg', { type: 'image/jpeg' })],
-          })
-        ) {
-          document.getElementById('shareBtn').style.display = 'inline-flex'
+        if (navigator.canShare && navigator.canShare({ files: [new File([], 't.jpg', { type: 'image/jpeg' })] })) {
+          document.getElementById('shareBtn').style.display = 'inline-flex';
         } else {
-          document.getElementById('shareBtn').style.display = 'none'
+          document.getElementById('shareBtn').style.display = 'none';
         }
       }
     </script>
